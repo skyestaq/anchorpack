@@ -30,8 +30,6 @@ export default async function EditOutfitPage({
     .from(outfitItems)
     .where(eq(outfitItems.outfitId, id))
 
-  const selectedIds = new Set(selectedRows.map((r) => r.gearItemId))
-
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-bold">Edit Outfit</h1>
@@ -40,7 +38,7 @@ export default async function EditOutfitPage({
         outfitName={outfit.name}
         outfitDescription={outfit.description ?? ''}
         allItems={allItems as GearItem[]}
-        selectedItemIds={selectedIds}
+        initialSelectedIds={selectedRows.map((r) => r.gearItemId)}
       />
     </div>
   )

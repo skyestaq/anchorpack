@@ -22,18 +22,19 @@ export async function createOutfit(name: string, description: string, gearItemId
 }
 
 export async function updateOutfit(id: string, name: string, description: string, gearItemIds: string[]) {
-  await db.update(outfits)
-    .set({ name, description: description || null })
-    .where(eq(outfits.id, id))
+  await db.transaction(async (tx) => {
+    await tx.update(outfits)
+      .set({ name, description: description || null })
+      .where(eq(outfits.id, id))
 
-  // Replace all outfit items
-  await db.delete(outfitItems).where(eq(outfitItems.outfitId, id))
+    await tx.delete(outfitItems).where(eq(outfitItems.outfitId, id))
 
-  if (gearItemIds.length > 0) {
-    await db.insert(outfitItems).values(
-      gearItemIds.map((gearItemId) => ({ outfitId: id, gearItemId }))
-    )
-  }
+    if (gearItemIds.length > 0) {
+      await tx.insert(outfitItems).values(
+        gearItemIds.map((gearItemId) => ({ outfitId: id, gearItemId }))
+      )
+    }
+  })
   revalidatePath('/outfits')
   redirect('/outfits')
 }

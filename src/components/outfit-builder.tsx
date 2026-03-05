@@ -9,7 +9,7 @@ interface OutfitBuilderProps {
   outfitName?: string
   outfitDescription?: string
   allItems: GearItem[]
-  selectedItemIds: Set<string>
+  initialSelectedIds: string[]
 }
 
 function formatWeight(oz: number): string {
@@ -23,11 +23,11 @@ export function OutfitBuilder({
   outfitName = '',
   outfitDescription = '',
   allItems,
-  selectedItemIds: initialSelected,
+  initialSelectedIds,
 }: OutfitBuilderProps) {
   const [name, setName] = useState(outfitName)
   const [description, setDescription] = useState(outfitDescription)
-  const [selected, setSelected] = useState<Set<string>>(new Set(initialSelected))
+  const [selected, setSelected] = useState<Set<string>>(new Set(initialSelectedIds))
   const [saving, setSaving] = useState(false)
 
   // Top-level items only

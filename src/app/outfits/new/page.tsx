@@ -15,7 +15,7 @@ export default async function NewOutfitPage() {
       <h1 className="text-2xl font-bold">New Outfit</h1>
       <OutfitBuilder
         allItems={items as GearItem[]}
-        selectedItemIds={new Set()}
+        initialSelectedIds={[]}
       />
     </div>
   )
