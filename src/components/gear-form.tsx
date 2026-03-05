@@ -16,19 +16,27 @@ export function GearForm({ item, parentItems }: GearFormProps) {
 
   async function handleSubmit(formData: FormData) {
     setSaving(true)
-    if (item) {
-      await updateGearItem(item.id, formData)
-    } else {
-      await createGearItem(formData)
+    try {
+      if (item) {
+        await updateGearItem(item.id, formData)
+      } else {
+        await createGearItem(formData)
+      }
+      router.push('/gear')
+    } finally {
+      setSaving(false)
     }
-    router.push('/gear')
   }
 
   async function handleDelete() {
     if (!item || !confirm('Delete this item?')) return
     setSaving(true)
-    await deleteGearItem(item.id)
-    router.push('/gear')
+    try {
+      await deleteGearItem(item.id)
+      router.push('/gear')
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (

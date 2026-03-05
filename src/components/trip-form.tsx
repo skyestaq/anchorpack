@@ -13,11 +13,14 @@ export function TripForm({ outfits }: TripFormProps) {
 
   async function handleSubmit(formData: FormData) {
     setSaving(true)
-    const name = formData.get('name') as string
-    const outfitId = formData.get('outfit_id') as string
-    const date = (formData.get('date') as string) || null
-    await createTrip(name, outfitId, date)
-    // redirect happens in the server action
+    try {
+      const name = formData.get('name') as string
+      const outfitId = formData.get('outfit_id') as string
+      const date = (formData.get('date') as string) || null
+      await createTrip(name, outfitId, date)
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (

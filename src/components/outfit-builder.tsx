@@ -100,19 +100,26 @@ export function OutfitBuilder({
   async function handleSave() {
     if (!name.trim()) return
     setSaving(true)
-    const ids = Array.from(selected)
-    if (outfitId) {
-      await updateOutfit(outfitId, name, description, ids)
-    } else {
-      await createOutfit(name, description, ids)
+    try {
+      const ids = Array.from(selected)
+      if (outfitId) {
+        await updateOutfit(outfitId, name, description, ids)
+      } else {
+        await createOutfit(name, description, ids)
+      }
+    } finally {
+      setSaving(false)
     }
-    // redirect happens in the server action
   }
 
   async function handleDelete() {
     if (!outfitId || !confirm('Delete this outfit?')) return
     setSaving(true)
-    await deleteOutfit(outfitId)
+    try {
+      await deleteOutfit(outfitId)
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (

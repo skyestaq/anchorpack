@@ -38,3 +38,16 @@ export async function deleteTrip(id: string) {
   revalidatePath('/trips')
   redirect('/trips')
 }
+
+export async function updatePackedStatus(checklistId: string, isPacked: boolean) {
+  await db.update(tripChecklist)
+    .set({ isPacked })
+    .where(eq(tripChecklist.id, checklistId))
+  // no revalidatePath — client state handles optimistic update
+}
+
+export async function updateChargedStatus(checklistId: string, isCharged: boolean) {
+  await db.update(tripChecklist)
+    .set({ isCharged })
+    .where(eq(tripChecklist.id, checklistId))
+}
