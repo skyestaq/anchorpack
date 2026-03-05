@@ -11,8 +11,7 @@ export default async function GearPage() {
     .from(gearItems)
     .orderBy(asc(gearItems.category), asc(gearItems.subCategory), asc(gearItems.name))
 
-  const topLevelItems = items.filter((i) => i.parentItemId === null)
-  const totalWeightOz = topLevelItems.reduce((sum, i) => {
+  const totalWeightOz = items.reduce((sum, i) => {
     const oz = i.weightOz ? parseFloat(String(i.weightOz)) : 0
     return sum + (isNaN(oz) ? 0 : oz)
   }, 0)

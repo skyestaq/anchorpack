@@ -59,10 +59,14 @@ export function GearList({ items }: GearListProps) {
     })
   }
 
-  function categoryWeight(catItems: GearItem[]): number {
+  function categoryWeight(catItems: GearItem[], childrenMap: Record<string, GearItem[]>): number {
     return catItems.reduce((sum, item) => {
-      const oz = item.weightOz ? parseFloat(String(item.weightOz)) : 0
-      return sum + (isNaN(oz) ? 0 : oz)
+      const itemOz = item.weightOz ? parseFloat(String(item.weightOz)) : 0
+      const childrenOz = (childrenMap[item.id] ?? []).reduce((cSum, child) => {
+        const oz = child.weightOz ? parseFloat(String(child.weightOz)) : 0
+        return cSum + (isNaN(oz) ? 0 : oz)
+      }, 0)
+      return sum + (isNaN(itemOz) ? 0 : itemOz) + childrenOz
     }, 0)
   }
 
@@ -79,7 +83,7 @@ export function GearList({ items }: GearListProps) {
               <span className="text-sm font-semibold">{category}</span>
               <span className="text-xs text-gray-400">({catItems.length})</span>
             </div>
-            <span className="text-xs text-gray-500">{formatWeight(categoryWeight(catItems))}</span>
+            <span className="text-xs text-gray-500">{formatWeight(categoryWeight(catItems, childrenMap))}</span>
           </button>
 
           {expandedCategories.has(category) && (
