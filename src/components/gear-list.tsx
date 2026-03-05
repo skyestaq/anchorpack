@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { GearItem } from '@/types/database'
 
 function formatWeight(oz: string | number | null): string {
@@ -94,7 +95,9 @@ export function GearList({ items }: GearListProps) {
                   <div key={item.id}>
                     <div className="flex items-center justify-between px-4 py-2 hover:bg-gray-50">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-sm">{item.name}</span>
+                        <Link href={`/gear/${item.id}/edit`} className="text-sm hover:underline">
+                          {item.name}
+                        </Link>
                         <TierBadge tier={item.tier} />
                         {!item.isPrimary && (
                           <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-500">
