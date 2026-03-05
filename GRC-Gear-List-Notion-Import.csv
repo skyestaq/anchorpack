@@ -1,0 +1,129 @@
+Item Name,Category,Sub-Category,LBs,OZs,Tier,Primary / Optional,Weighed,Needs Charge,Packed,Notes
+Talon 44 Pack,Backpack,Pack/Main Items,2.35,37.6,1,Primary,TRUE,FALSE,FALSE,
+Camp Towel,Backpack,Pack/Main Items,0.17,2.70,1,Primary,TRUE,FALSE,FALSE,
+Snow Peak Mug,Backpack,Pack/Main Items,0.14,2.2,1,Primary,TRUE,FALSE,FALSE,
+Leki Hiking Poles,Backpack,Pack/Main Items,0.00,0.00,1,Primary,TRUE,FALSE,FALSE,
+Ziploc,Backpack,Pack/Main Items,0.00,0.01,1,Primary,TRUE,FALSE,FALSE,
+Nemo Chipper,Backpack,Pack/Main Items,0.35,5.60,1,Primary,TRUE,FALSE,FALSE,
+Pack Liner,Backpack,Pack/Main Items,0.00,1.50,1,Primary,TRUE,FALSE,FALSE,
+Oofo Slides,Backpack,Wearables,0.78,12.40,1,Primary,TRUE,FALSE,FALSE,
+Old Navy Green Flip-Flops,Backpack,Wearables,0.47,7.50,1,Primary,TRUE,FALSE,FALSE,
+Purple Nano Hood Jacket (puff),Backpack,Wearables,0.94,15.00,1,Primary,TRUE,FALSE,FALSE,
+Orange Nano Jacket (puff),Backpack,Wearables,0.80,12.80,1,Primary,TRUE,FALSE,FALSE,
+Baby Bloodline,Backpack,Wearables,0.39,6.30,1,Primary,TRUE,FALSE,FALSE,
+Pack Rain Cover,Backpack,Pack/Main Items,0.20,3.20,1,Optional,TRUE,FALSE,FALSE,validate
+Aether Rain Cover,Backpack,Pack/Main Items,0.31,4.90,2,Optional,TRUE,FALSE,FALSE,validate
+Silky Saw,Backpack,Pack/Main Items,0.33,5.30,2,Optional,TRUE,FALSE,FALSE,
+Multi-tool,Backpack,Pack/Main Items,0.28,4.40,1,Optional,TRUE,FALSE,FALSE,
+Carabiner,Backpack,Pack/Main Items,0.08,1.20,1,Optional,TRUE,FALSE,FALSE,
+North Face Terra Pack,Backpack,Pack/Main Items,4.45,71.20,3,Optional,TRUE,FALSE,FALSE,
+Black Diamond Hiking Poles,Backpack,Pack/Main Items,0.00,0.00,2,Optional,TRUE,FALSE,FALSE,
+OR Orange Helium II Rain Jacket,Backpack,Wearables,0.40,6.40,1,Optional,TRUE,FALSE,FALSE,
+Marmot Green Minimalist Rain Jacket,Backpack,Wearables,0.78,12.40,2,Optional,TRUE,FALSE,FALSE,
+Nemo Hornet (tent fly footprint poles stakes),Shelter,Tents,2.31,37.00,1,Primary,TRUE,FALSE,FALSE,
+Nemo Dragonfly (tent fly footprint poles stakes),Shelter,Tents,3.88,62.10,1,Primary,TRUE,FALSE,FALSE,
+Nemo Blaze (tent fly footprint poles stakes),Shelter,Tents,2.58,41.30,1,Primary,TRUE,FALSE,FALSE,
+Compression - UltraSil - S - 10L (tent),Shelter,Tents,0.16,2.20,1,Primary,TRUE,FALSE,FALSE,
+ProFly + Stakes,Shelter,Hammock,1.50,24.00,1,Primary,TRUE,FALSE,FALSE,
+Eno Single Nest,Shelter,Hammock,0.97,15.50,1,Primary,TRUE,FALSE,FALSE,
+Eno Atlas Straps,Shelter,Hammock,0.74,11.80,1,Primary,TRUE,FALSE,FALSE,
+Nemo Losi,Shelter,Tents & Hammock,,,,Optional,FALSE,FALSE,FALSE,
+Nemo Riff 30,Sleeping Bag,Sleeping Bags,0.00,,1,Primary,FALSE,FALSE,FALSE,needs weigh
+Nemo Nocturne 30,Sleeping Bag,Sleeping Bags,1.90,30.40,2,Primary,TRUE,FALSE,FALSE,
+Nemo Salsa 15,Sleeping Bag,Sleeping Bags,2.48,39.60,1,Primary,TRUE,FALSE,FALSE,
+Nemo Tempo 50,Sleeping Bag,Sleeping Bags,2.72,43.50,1,Primary,TRUE,FALSE,FALSE,
+Compression - UltraSil eVENT - M - 14L (s-bag),Sleeping Bag,Sleeping Bags,0.14,3.20,1,Primary,TRUE,FALSE,FALSE,
+Mountain Hardware Lumina,Sleeping Bag,Sleeping Bags,1.83,29.20,2,Optional,TRUE,FALSE,FALSE,
+North Face Bag,Sleeping Bag,Sleeping Bags,1.83,29.20,2,Optional,TRUE,FALSE,FALSE,
+Nemo Tensor Regular,Sleeping Pad,Sleeping Pads,1.12,17.90,1,Primary,TRUE,FALSE,FALSE,
+Nemo Tensor Regular Wide,Sleeping Pad,Sleeping Pads,1.21,19.30,1,Primary,TRUE,FALSE,FALSE,
+Nemo Fillo Pillow,Sleeping Pad,Sleeping Pads,0.63,10,2,Primary,TRUE,FALSE,FALSE,
+Sea-to-Summit Aeros Pillow,Sleeping Pad,Sleeping Pads,0.18,2.90,1,Primary,TRUE,FALSE,FALSE,
+ThermaRest Z-Lite Foam,Sleeping Pad,Sleeping Pads,0.88,14,1,Primary,FALSE,FALSE,FALSE,needs weigh
+Nemo Tracer,Sleeping Pad,Sleeping Pads,0.59,9.4,1,Primary,TRUE,FALSE,FALSE,
+ThermaRest Neo-Air Pad,Sleeping Pad,Sleeping Pads,1.025,16.4,1,Optional,TRUE,FALSE,FALSE,
+See-Thru - StoS - S - 6.5L,Stuff Sacks,Compression & Stuff Bags,0.02,0.30,2,Optional,TRUE,FALSE,FALSE,
+Compression - REI Ultralight - 16L,Stuff Sacks,Compression & Stuff Bags,0.22,3.50,2,Optional,TRUE,FALSE,FALSE,
+Dry Sack - StoS - 13L,Stuff Sacks,Compression & Stuff Bags,0.26,4.10,3,Optional,TRUE,FALSE,FALSE,
+Compression - Granite Gear - 16L,Stuff Sacks,Compression & Stuff Bags,0.29,4.60,3,Optional,TRUE,FALSE,FALSE,
+Sawyer Kit (filter dirty bags hang-kit adapters),Water,Water,0.51,8.10,1,Primary,TRUE,FALSE,FALSE,
+Hydration Bladder (3L),Water,Water,0.53,8.40,1,Primary,TRUE,FALSE,FALSE,
+SmartWater Bottle (empty),Water,Water,0.06,1.00,1,Primary,TRUE,FALSE,FALSE,
+Hydrapak Stow Bottle,Water,Water,0.13,2.00,1,Primary,TRUE,FALSE,FALSE,
+Platypus Bottle,Water,Water,0.09,1.50,2,Primary,TRUE,FALSE,FALSE,
+Sawyer Filter Mini,Water,Water,,,2,Optional,FALSE,FALSE,FALSE,
+JetBoil MiniMo,Stove,Stove,0.93,14.90,1,Primary,TRUE,FALSE,FALSE,
+Fuel (7.3oz full canister),Stove,Stove,0.00,0,1,Primary,TRUE,FALSE,FALSE,
+Snow Peak LiteMax+Potholder,Stove,Stove,0.15,2.4,1,Optional,TRUE,FALSE,FALSE,
+Snow Peak Mini Solo Cookset,Stove,Stove,0.74,11.8,1,Optional,TRUE,FALSE,FALSE,
+Snow Peak Trek 900 Cookset,Stove,Stove,0.49,7.9,3,Optional,TRUE,FALSE,FALSE,
+JetBoil Flash,Stove,Stove,0.95,15.20,2,Optional,TRUE,FALSE,FALSE,
+GSI Coffee Filter,Food,Food Items,0.00,,2,Optional,FALSE,FALSE,FALSE,
+GSI Coffee Grinder,Food,Food Items,0.00,,1,Optional,FALSE,FALSE,FALSE,
+Stanley Green Flask/Bottle,Food,Food Items,0.85,13.60,1,Optional,TRUE,FALSE,FALSE,
+Vapur Soft Flask,Food,Food Items,,,1,Optional,FALSE,FALSE,FALSE,
+Food Bag,Food,Food Items,,,,Primary,FALSE,FALSE,FALSE,parent bag — sub-items not individually weighed
+Tyvek Food Bag,Food,Food Items,,,,Primary,FALSE,FALSE,FALSE,sub-item of Food Bag
+Coffee + Hygiene Kit,Food,Food Items,,,,Primary,FALSE,FALSE,FALSE,sub-item of Food Bag
+Deodorant,Food,Food Items,,,,Primary,FALSE,FALSE,FALSE,sub-item of Food Bag
+Toothbrush,Food,Food Items,,,,Primary,FALSE,FALSE,FALSE,sub-item of Food Bag
+Toothpaste,Food,Food Items,,,,Primary,FALSE,FALSE,FALSE,sub-item of Food Bag
+Floss,Food,Food Items,,,,Primary,FALSE,FALSE,FALSE,sub-item of Food Bag
+Meals,Food,Food Items,,,,Primary,FALSE,FALSE,FALSE,sub-item of Food Bag
+Energy/Snacks,Food,Food Items,,,,Primary,FALSE,FALSE,FALSE,sub-item of Food Bag
+LiquidIV / Mio / Electrolytes,Food,Food Items,,,,Primary,FALSE,FALSE,FALSE,sub-item of Food Bag
+Bourbon / Flask,Food,Food Items,,,,Primary,FALSE,FALSE,FALSE,sub-item of Food Bag
+Quick Access Pack (includes bag),Quick Bag,Quick Access Pack,0.79,12.60,,Primary,TRUE,FALSE,FALSE,parent bag
+Powder,Quick Bag,Quick Access Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Quick Access Pack
+Spoon,Quick Bag,Quick Access Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Quick Access Pack
+Headlamp,Quick Bag,Quick Access Pack,,,,Primary,FALSE,FALSE,FALSE,needs charge — sub-item of Quick Access Pack
+Baby Wipes,Quick Bag,Quick Access Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Quick Access Pack
+Aleve,Quick Bag,Quick Access Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Quick Access Pack
+Allergy/Sleep Meds/DevLett,Quick Bag,Quick Access Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Quick Access Pack
+Tums,Quick Bag,Quick Access Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Quick Access Pack
+Hand Sanitizer,Quick Bag,Quick Access Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Quick Access Pack
+Body Glide,Quick Bag,Quick Access Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Quick Access Pack
+First Aid Kit,Quick Bag,Quick Access Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Quick Access Pack
+Insect Repellant,Quick Bag,Quick Access Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Quick Access Pack
+Lighter,Quick Bag,Quick Access Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Quick Access Pack
+Sunscreen,Quick Bag,Quick Access,,,,,FALSE,FALSE,FALSE,sub-item — Optional
+Chopsticks,Quick Bag,Quick Access,,,,,FALSE,FALSE,FALSE,sub-item — Optional
+Soap,Quick Bag,Quick Access,,,,,FALSE,FALSE,FALSE,sub-item — Optional
+Shampoo,Quick Bag,Quick Access,,,,,FALSE,FALSE,FALSE,sub-item — Optional
+Campsite Pack (includes bag),Campsite Bag,Campsite Pack,0.60,9.60,,Primary,TRUE,FALSE,FALSE,parent bag
+Paracord - red,Campsite Bag,Campsite Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Campsite Pack
+Repair Kit,Campsite Bag,Campsite Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Campsite Pack
+Matches,Campsite Bag,Campsite Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Campsite Pack
+Charger Battery,Campsite Bag,Campsite Pack,,,,Primary,FALSE,FALSE,FALSE,needs charge — sub-item of Campsite Pack
+Phone charging cable,Campsite Bag,Campsite Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Campsite Pack
+Flextail Zero,Campsite Bag,Campsite Pack,,,,Primary,FALSE,FALSE,FALSE,needs charge — sub-item of Campsite Pack
+Fireplugs,Campsite Bag,Campsite Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Campsite Pack
+Tissue Pack,Campsite Bag,Campsite Pack,,,,Primary,FALSE,FALSE,FALSE,sub-item of Campsite Pack
+Waterproof Tape,Campsite Bag,Campsite Pack,,,,Optional,FALSE,FALSE,FALSE,sub-item — Optional
+Earplugs,Campsite Bag,Campsite Pack,,,,Optional,FALSE,FALSE,FALSE,sub-item — Optional
+Emergency Blanket,Campsite Bag,Campsite Pack,,,,Optional,FALSE,FALSE,FALSE,sub-item — Optional
+Headphones,Campsite Bag,Campsite Pack,,,,Optional,FALSE,FALSE,FALSE,sub-item — Optional
+Cigar,Campsite Bag,Campsite Pack,,,,Optional,FALSE,FALSE,FALSE,sub-item — Optional
+Clothes Bag,Clothes,Clothes,2.49,39.80,,Primary,TRUE,FALSE,FALSE,parent bag
+See-Thru - StoS - LG - 15L,Clothes,Clothes,,,,Primary,FALSE,FALSE,FALSE,sub-item of Clothes Bag
+#2 Wicking T-shirt,Clothes,Clothes,,,,Primary,FALSE,FALSE,FALSE,sub-item of Clothes Bag
+#2 Underwear,Clothes,Clothes,,,,Primary,FALSE,FALSE,FALSE,sub-item of Clothes Bag
+#2 Socks (liner + pair),Clothes,Clothes,,,,Primary,FALSE,FALSE,FALSE,sub-item of Clothes Bag
+North Face Green Pullover,Clothes,Clothes,,,,Primary,FALSE,FALSE,FALSE,sub-item of Clothes Bag
+Patagonia Grey Hooded Layer,Clothes,Clothes,,,,Primary,FALSE,FALSE,FALSE,sub-item of Clothes Bag
+Midweight Blue Columbia Sweatshirt,Clothes,Clothes,,,,Primary,FALSE,FALSE,FALSE,sub-item of Clothes Bag
+Sahara Pants,Clothes,Clothes,,,,Primary,FALSE,FALSE,FALSE,sub-item of Clothes Bag
+Base Layer Top,Clothes,Clothes,,,,Primary,FALSE,FALSE,FALSE,sub-item of Clothes Bag
+Base Layer Bottom,Clothes,Clothes,,,,Primary,FALSE,FALSE,FALSE,sub-item of Clothes Bag
+Gaiters - Light,Clothes,Clothes,,,,Optional,FALSE,FALSE,FALSE,sub-item — Optional
+Bandana,Day-Of,On-Person Clothes,,,,Primary,FALSE,FALSE,FALSE,
+Headband,Day-Of,On-Person Clothes,,,,Primary,FALSE,FALSE,FALSE,
+#1 Wicking T-shirt,Day-Of,On-Person Clothes,,,,Primary,FALSE,FALSE,FALSE,
+#1 Underwear,Day-Of,On-Person Clothes,,,,Primary,FALSE,FALSE,FALSE,
+Backcountry Shorts,Day-Of,On-Person Clothes,,,,Primary,FALSE,FALSE,FALSE,
+#1 Socks (liner + pair),Day-Of,On-Person Clothes,,,,Primary,FALSE,FALSE,FALSE,
+Hiking Boots,Day-Of,Shoes,,,,Primary,FALSE,FALSE,FALSE,
+Hiking Shoes (Salomon Sense Ride),Day-Of,Shoes,,,,Primary,FALSE,FALSE,FALSE,
+Car Key,Day-Of,On-Person Extras,,,,Primary,FALSE,FALSE,FALSE,
+Map (printouts),Day-Of,On-Person,,,,Optional,FALSE,FALSE,FALSE,
+GoPro,Day-Of,On-Person,,,,Optional,FALSE,FALSE,FALSE,
