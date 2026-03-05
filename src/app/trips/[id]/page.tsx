@@ -1,7 +1,7 @@
 import { db } from '@/lib/db'
 import { trips, tripChecklist, gearItems } from '@/lib/db/schema'
 import { TripChecklist } from '@/components/trip-checklist'
-import { GearItem, Trip, TripChecklistItem } from '@/types/database'
+import { GearItem, TripChecklistItem } from '@/types/database'
 import { eq } from 'drizzle-orm'
 import { notFound } from 'next/navigation'
 
@@ -72,14 +72,13 @@ export default async function TripPage({
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold">{(trip as Trip).name}</h1>
-        {(trip as Trip).date && (
-          <p className="text-sm text-gray-500">{(trip as Trip).date}</p>
+        <h1 className="text-2xl font-bold">{trip.name}</h1>
+        {trip.date && (
+          <p className="text-sm text-gray-500">{trip.date}</p>
         )}
       </div>
       <TripChecklist
         tripId={id}
-        tripName={(trip as Trip).name}
         entries={entries}
       />
     </div>

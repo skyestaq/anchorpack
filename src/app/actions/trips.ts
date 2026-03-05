@@ -50,4 +50,5 @@ export async function updateChargedStatus(checklistId: string, isCharged: boolea
   await db.update(tripChecklist)
     .set({ isCharged })
     .where(eq(tripChecklist.id, checklistId))
+  // no revalidatePath — client state handles optimistic update
 }

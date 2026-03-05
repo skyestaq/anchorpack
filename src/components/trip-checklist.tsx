@@ -12,11 +12,10 @@ interface ChecklistEntry {
 
 interface TripChecklistProps {
   tripId: string
-  tripName: string
   entries: ChecklistEntry[]
 }
 
-export function TripChecklist({ tripId, tripName, entries: initialEntries }: TripChecklistProps) {
+export function TripChecklist({ tripId, entries: initialEntries }: TripChecklistProps) {
   const router = useRouter()
   const [entries, setEntries] = useState(initialEntries)
 
