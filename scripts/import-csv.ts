@@ -173,13 +173,13 @@ for (const row of rows) {
       name,
       category,
       subCategory,
-      weightOz: weightOz ?? undefined,
-      tier: tier ?? undefined,
+      weightOz: weightOz,
+      tier: tier,
       isPrimary,
       isWeighed,
       needsCharge,
       parentItemId: null,
-      notes: notes ?? undefined,
+      notes: notes,
     })
     .returning({ id: schema.gearItems.id })
 
