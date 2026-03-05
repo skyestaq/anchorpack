@@ -2,32 +2,23 @@ import { db } from '@/lib/db'
 import { outfits, outfitItems, gearItems } from '@/lib/db/schema'
 import { OutfitCard } from '@/components/outfit-card'
 import Link from 'next/link'
-import { eq, desc } from 'drizzle-orm'
+import { eq, desc, count, sum } from 'drizzle-orm'
 
 export default async function OutfitsPage() {
-  // Fetch all outfits
-  const allOutfits = await db
-    .select()
-    .from(outfits)
-    .orderBy(desc(outfits.createdAt))
-
-  // For each outfit, get item count and total weight
-  const outfitsWithStats = await Promise.all(
-    allOutfits.map(async (outfit) => {
-      const items = await db
-        .select({ weightOz: gearItems.weightOz })
-        .from(outfitItems)
-        .innerJoin(gearItems, eq(outfitItems.gearItemId, gearItems.id))
-        .where(eq(outfitItems.outfitId, outfit.id))
-
-      const totalWeightOz = items.reduce((sum, i) => {
-        const oz = i.weightOz ? parseFloat(String(i.weightOz)) : 0
-        return sum + (isNaN(oz) ? 0 : oz)
-      }, 0)
-
-      return { ...outfit, itemCount: items.length, totalWeightOz }
+  const outfitsWithStats = await db
+    .select({
+      id: outfits.id,
+      name: outfits.name,
+      description: outfits.description,
+      createdAt: outfits.createdAt,
+      itemCount: count(outfitItems.id),
+      totalWeightOz: sum(gearItems.weightOz),
     })
-  )
+    .from(outfits)
+    .leftJoin(outfitItems, eq(outfitItems.outfitId, outfits.id))
+    .leftJoin(gearItems, eq(outfitItems.gearItemId, gearItems.id))
+    .groupBy(outfits.id, outfits.name, outfits.description, outfits.createdAt)
+    .orderBy(desc(outfits.createdAt))
 
   return (
     <div className="space-y-4">
@@ -57,7 +48,7 @@ export default async function OutfitsPage() {
               name={outfit.name}
               description={outfit.description}
               itemCount={outfit.itemCount}
-              totalWeightOz={outfit.totalWeightOz}
+              totalWeightOz={parseFloat(outfit.totalWeightOz ?? '0')}
             />
           ))}
         </div>
