@@ -4,6 +4,10 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { GearItem } from '@/types/database'
 
+function displayName(item: { manufacturer: string | null; name: string }): string {
+  return item.manufacturer ? `${item.manufacturer} ${item.name}` : item.name
+}
+
 function formatWeight(oz: string | number | null): string {
   if (oz === null || oz === undefined) return '—'
   const ozNum = typeof oz === 'string' ? parseFloat(oz) : oz
@@ -14,16 +18,39 @@ function formatWeight(oz: string | number | null): string {
 
 function TierBadge({ tier }: { tier: number | null }) {
   if (!tier) return null
-  const colors: Record<number, string> = {
-    1: 'bg-green-100 text-green-700',
-    2: 'bg-yellow-100 text-yellow-700',
-    3: 'bg-red-100 text-red-700',
+  const classes: Record<number, string> = {
+    1: 'bg-action text-forest-dark',
+    2: 'bg-forest text-white',
+    3: 'bg-pewter-mid text-white',
   }
   return (
-    <span className={`rounded px-1.5 py-0.5 text-xs font-medium ${colors[tier] ?? ''}`}>
+    <span className={`font-data rounded px-1.5 py-0.5 text-xs font-medium ${classes[tier] ?? ''}`}>
       T{tier}
     </span>
   )
+}
+
+const CATEGORY_ORDER: Record<string, { index: number; label: string; description: string }> = {
+  'Backpack':     { index: 0,  label: '00  Backpack',     description: 'Pack and key items carried inside it' },
+  'Shelter':      { index: 1,  label: '01  Shelter',      description: 'Tents, hammocks, and tarps' },
+  'Sleeping Bag': { index: 2,  label: '02  Sleeping Bag', description: 'Sleeping bags and liners' },
+  'Sleeping Pad': { index: 3,  label: '03  Sleeping Pad', description: 'Pads, pillows, and insulation from the ground' },
+  'Stuff Sacks':  { index: 4,  label: '04  Stuff Sacks',  description: 'Compression and stuff sacks' },
+  'Water':        { index: 5,  label: '05  Water System',  description: 'Filtration, bottles, and hydration' },
+  'Stove':        { index: 6,  label: '06  Cook System',  description: 'Stove, fuel, and cook kit' },
+  'Food':         { index: 7,  label: '07  Food',         description: 'Meals, snacks, and food bag' },
+  'Quick Bag':    { index: 8,  label: '08  Quick Bag',    description: 'Hip belt and top-lid quick-access items' },
+  'Campsite Bag': { index: 9,  label: '09  Campsite Bag', description: 'Camp shoes, comfort, and site extras' },
+  'Clothes':      { index: 10, label: '10  Clothing',      description: 'Layers, rain gear, and wearables' },
+  'Day-Of':       { index: 11, label: '11  Day-Of',       description: 'Items packed the morning of departure' },
+}
+
+function categoryLabel(cat: string): string {
+  return CATEGORY_ORDER[cat]?.label ?? cat
+}
+
+function categoryDescription(cat: string): string {
+  return CATEGORY_ORDER[cat]?.description ?? ''
 }
 
 interface GearListProps {
@@ -37,11 +64,20 @@ export function GearList({ items }: GearListProps) {
   const topLevel = items.filter((i) => i.parentItemId === null)
 
   // Group top-level by category
-  const categories = topLevel.reduce<Record<string, GearItem[]>>((acc, item) => {
+  const rawCategories = topLevel.reduce<Record<string, GearItem[]>>((acc, item) => {
     if (!acc[item.category]) acc[item.category] = []
     acc[item.category].push(item)
     return acc
   }, {})
+
+  // Sort categories by defined order, unknown categories go last alphabetically
+  const categories = Object.fromEntries(
+    Object.entries(rawCategories).sort(([a], [b]) => {
+      const ai = CATEGORY_ORDER[a]?.index ?? 999
+      const bi = CATEGORY_ORDER[b]?.index ?? 999
+      return ai !== bi ? ai - bi : a.localeCompare(b)
+    })
+  )
 
   // Children map
   const childrenMap = items.reduce<Record<string, GearItem[]>>((acc, item) => {
@@ -72,62 +108,74 @@ export function GearList({ items }: GearListProps) {
   }
 
   return (
-    <div className="space-y-2">
-      {Object.entries(categories).map(([category, catItems]) => (
-        <div key={category} className="rounded-lg border border-gray-200 bg-white">
+    <div className="space-y-2 max-w-[75%]">
+      {Object.entries(categories).map(([category, rawCatItems]) => {
+        const catItems = [...rawCatItems].sort((a, b) => {
+          const tierA = a.tier ?? 999
+          const tierB = b.tier ?? 999
+          if (tierA !== tierB) return tierA - tierB
+          const primaryA = a.isPrimary ? 0 : 1
+          const primaryB = b.isPrimary ? 0 : 1
+          if (primaryA !== primaryB) return primaryA - primaryB
+          return displayName(a).localeCompare(displayName(b))
+        })
+        return (
+        <div key={category} className="rounded-lg border border-pewter-mid bg-pewter-light overflow-hidden">
           <button
             onClick={() => toggleCategory(category)}
-            className="flex w-full items-center justify-between px-4 py-3 text-left hover:bg-gray-50"
+            className="flex w-full items-center justify-between px-4 py-3 text-left hover:bg-pewter transition-colors"
           >
             <div className="flex items-center gap-2">
-              <span className="text-sm">{expandedCategories.has(category) ? '▾' : '▸'}</span>
-              <span className="text-sm font-semibold">{category}</span>
-              <span className="text-xs text-gray-400">({catItems.length})</span>
+              <span className="text-xs text-pewter-pale">{expandedCategories.has(category) ? '▾' : '▸'}</span>
+              <span className="font-data text-sm font-medium text-white">{categoryLabel(category)}</span>
+              {categoryDescription(category) && (
+                <span className="text-xs text-pewter-mid">{categoryDescription(category)}</span>
+              )}
             </div>
-            <span className="text-xs text-gray-500">{formatWeight(categoryWeight(catItems, childrenMap))}</span>
+            <span className="font-data text-xs text-pewter-pale">{catItems.length} items</span>
           </button>
 
           {expandedCategories.has(category) && (
-            <div className="border-t border-gray-100">
+            <div className="border-t border-pewter-mid">
               {catItems.map((item) => {
                 const children = childrenMap[item.id] ?? []
                 return (
                   <div key={item.id}>
-                    <div className="flex items-center justify-between px-4 py-2 hover:bg-gray-50">
+                    <div className={`flex items-center justify-between px-4 py-2 hover:bg-pewter transition-colors border-l-2 ${item.isPrimary ? 'border-action' : 'border-forest-light'}`}>
                       <div className="flex flex-wrap items-center gap-2">
-                        <Link href={`/gear/${item.id}/edit`} className="text-sm hover:underline">
-                          {item.name}
+                        <Link href={`/gear/${item.id}/edit`} className="text-sm text-white hover:text-action transition-colors">
+                          {displayName(item)}
                         </Link>
                         <TierBadge tier={item.tier} />
                         {!item.isPrimary && (
-                          <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-500">
+                          <span className="font-data rounded bg-pewter-mid px-1.5 py-0.5 text-xs text-pewter-pale">
                             optional
                           </span>
                         )}
                         {item.needsCharge && (
-                          <span className="text-xs text-amber-500" title="Needs charge">⚡</span>
+                          <span className="text-xs text-action" title="Needs charge">⚡</span>
                         )}
                         {children.length > 0 && (
-                          <span className="text-xs text-gray-400">{children.length} sub-items</span>
+                          <span className="font-data text-xs text-pewter-mid">{children.length} sub-items</span>
                         )}
                       </div>
-                      <span className="ml-4 shrink-0 text-xs text-gray-500">
+                      <span className="ml-4 shrink-0 font-data text-xs text-pewter-pale">
                         {formatWeight(item.weightOz)}
                       </span>
                     </div>
                     {children.map((child) => (
                       <div
                         key={child.id}
-                        className="flex items-center justify-between py-1.5 pl-10 pr-4 hover:bg-gray-50"
+                        className="flex items-center justify-between py-1.5 pl-10 pr-4 border-l-2 border-pewter-mid hover:bg-pewter transition-colors"
                       >
                         <div className="flex items-center gap-2">
-                          <span className="text-xs text-gray-500">↳</span>
-                          <span className="text-xs text-gray-700">{child.name}</span>
+                          <span className="text-xs text-pewter-mid">↳</span>
+                          <span className="text-xs text-pewter-pale">{displayName(child)}</span>
                           {child.needsCharge && (
-                            <span className="text-xs text-amber-500">⚡</span>
+                            <span className="text-xs text-action">⚡</span>
                           )}
                         </div>
-                        <span className="text-xs text-gray-400">{formatWeight(child.weightOz)}</span>
+                        <span className="font-data text-xs text-pewter-mid">{formatWeight(child.weightOz)}</span>
                       </div>
                     ))}
                   </div>
@@ -136,7 +184,8 @@ export function GearList({ items }: GearListProps) {
             </div>
           )}
         </div>
-      ))}
+        )
+      })}
     </div>
   )
 }

@@ -8,6 +8,8 @@ interface TripFormProps {
   outfits: Outfit[]
 }
 
+const inputClass = 'mt-1 w-full rounded border border-pewter-mid bg-pewter px-3 py-2 text-sm text-white placeholder-pewter-mid focus:border-action focus:outline-none focus:ring-1 focus:ring-action'
+
 export function TripForm({ outfits }: TripFormProps) {
   const [saving, setSaving] = useState(false)
 
@@ -26,21 +28,21 @@ export function TripForm({ outfits }: TripFormProps) {
   return (
     <form action={handleSubmit} className="max-w-lg space-y-4">
       <div>
-        <label className="block text-sm font-medium">Trip Name</label>
+        <label className="block text-xs font-medium uppercase tracking-wider text-pewter-pale">Trip Name</label>
         <input
           name="name"
           required
           placeholder="e.g., Mt. Whitney June 2026"
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+          className={inputClass}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Outfit</label>
+        <label className="block text-xs font-medium uppercase tracking-wider text-pewter-pale">Outfit</label>
         <select
           name="outfit_id"
           required
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+          className={inputClass}
         >
           <option value="">Select an outfit...</option>
           {outfits.map((o) => (
@@ -50,18 +52,20 @@ export function TripForm({ outfits }: TripFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Trip Date <span className="text-gray-400">(optional)</span></label>
+        <label className="block text-xs font-medium uppercase tracking-wider text-pewter-pale">
+          Trip Date <span className="text-pewter-mid normal-case">(optional)</span>
+        </label>
         <input
           name="date"
           type="date"
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+          className={inputClass}
         />
       </div>
 
       <button
         type="submit"
         disabled={saving}
-        className="rounded bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 disabled:opacity-50"
+        className="rounded border border-action bg-forest px-4 py-2 text-sm font-medium text-white hover:bg-forest-light transition-colors disabled:opacity-50"
       >
         {saving ? 'Creating...' : 'Create Trip'}
       </button>

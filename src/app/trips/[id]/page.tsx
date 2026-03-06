@@ -72,9 +72,9 @@ export default async function TripPage({
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold">{trip.name}</h1>
+        <h1 className="font-display text-2xl text-white">{trip.name}</h1>
         {trip.date && (
-          <p className="text-sm text-gray-500">{trip.date}</p>
+          <p className="font-data text-sm text-pewter-pale">{trip.date}</p>
         )}
       </div>
       <TripChecklist

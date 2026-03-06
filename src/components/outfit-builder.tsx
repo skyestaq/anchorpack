@@ -12,6 +12,10 @@ interface OutfitBuilderProps {
   initialSelectedIds: string[]
 }
 
+function displayName(item: { manufacturer: string | null; name: string }): string {
+  return item.manufacturer ? `${item.manufacturer} ${item.name}` : item.name
+}
+
 function formatWeight(oz: number): string {
   if (oz === 0) return '0 oz'
   if (oz >= 16) return `${(oz / 16).toFixed(2)} lbs`
@@ -130,30 +134,30 @@ export function OutfitBuilder({
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Outfit name..."
-          className="w-full rounded border border-gray-300 px-3 py-2 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gray-900"
+          className="w-full rounded border border-pewter-mid bg-pewter px-3 py-2 font-display text-lg text-white placeholder-pewter-mid focus:border-action focus:outline-none focus:ring-1 focus:ring-action"
         />
         <input
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Description (optional)"
-          className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+          className="w-full rounded border border-pewter-mid bg-pewter px-3 py-2 text-sm text-pewter-pale placeholder-pewter-mid focus:border-action focus:outline-none focus:ring-1 focus:ring-action"
         />
       </div>
 
       {/* Weight Summary */}
-      <div className="rounded-lg border border-gray-200 bg-white p-4">
+      <div className="rounded-lg border border-pewter-mid bg-pewter-light p-4">
         <div className="flex items-baseline justify-between">
-          <span className="text-sm font-medium text-gray-600">Total Weight</span>
-          <span className="text-2xl font-bold">{formatWeight(totalWeightOz)}</span>
+          <span className="text-xs font-medium uppercase tracking-wider text-pewter-pale">Total Weight</span>
+          <span className="font-display text-2xl text-action">{formatWeight(totalWeightOz)}</span>
         </div>
         <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
           {Object.entries(categoryWeights).map(([cat, oz]) => (
-            <span key={cat} className="text-xs text-gray-500">
+            <span key={cat} className="font-data text-xs text-pewter-pale">
               {cat}: {formatWeight(oz)}
             </span>
           ))}
         </div>
-        <p className="mt-2 text-xs text-gray-400">{selected.size} items selected</p>
+        <p className="mt-2 font-data text-xs text-pewter-mid">{selected.size} items selected</p>
       </div>
 
       {/* Quick Select */}
@@ -161,21 +165,21 @@ export function OutfitBuilder({
         <button
           type="button"
           onClick={() => quickSelect('tier1')}
-          className="rounded border border-gray-300 px-3 py-1.5 text-xs font-medium hover:bg-gray-100"
+          className="rounded border border-action bg-forest px-3 py-1.5 text-xs font-medium text-white hover:bg-forest-light transition-colors"
         >
           All Tier 1
         </button>
         <button
           type="button"
           onClick={() => quickSelect('primary')}
-          className="rounded border border-gray-300 px-3 py-1.5 text-xs font-medium hover:bg-gray-100"
+          className="rounded border border-action bg-forest px-3 py-1.5 text-xs font-medium text-white hover:bg-forest-light transition-colors"
         >
           All Primary
         </button>
         <button
           type="button"
           onClick={() => quickSelect('clear')}
-          className="rounded border border-gray-300 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+          className="rounded border border-pewter-mid px-3 py-1.5 text-xs font-medium text-pewter-pale hover:border-red-400 hover:text-red-400 transition-colors"
         >
           Clear All
         </button>
@@ -183,9 +187,9 @@ export function OutfitBuilder({
 
       {/* Gear by Category */}
       {Object.entries(categories).map(([category, catItems]) => (
-        <div key={category} className="rounded-lg border border-gray-200 bg-white">
-          <div className="border-b border-gray-100 px-4 py-2">
-            <span className="text-sm font-semibold">{category}</span>
+        <div key={category} className="overflow-hidden rounded-lg border border-pewter-mid bg-pewter-light">
+          <div className="border-b border-pewter-mid px-4 py-2">
+            <span className="text-sm font-medium text-white">{category}</span>
           </div>
           <div>
             {catItems.map((item) => {
@@ -193,38 +197,38 @@ export function OutfitBuilder({
               const isChecked = selected.has(item.id)
               return (
                 <div key={item.id}>
-                  <label className="flex cursor-pointer items-center justify-between px-4 py-2.5 hover:bg-gray-50">
+                  <label className={`flex cursor-pointer items-center justify-between px-4 py-2.5 hover:bg-pewter transition-colors border-l-2 ${item.isPrimary ? 'border-action' : 'border-forest-light'}`}>
                     <div className="flex items-center gap-3">
                       <input
                         type="checkbox"
                         checked={isChecked}
                         onChange={() => toggleItem(item.id)}
-                        className="h-4 w-4 rounded border-gray-300"
+                        className="h-4 w-4 rounded accent-action"
                       />
-                      <span className="text-sm">{item.name}</span>
+                      <span className="text-sm text-white">{displayName(item)}</span>
                       {item.tier && (
-                        <span className={`rounded px-1.5 py-0.5 text-xs font-medium ${
-                          item.tier === 1 ? 'bg-green-100 text-green-700' :
-                          item.tier === 2 ? 'bg-yellow-100 text-yellow-700' :
-                          'bg-red-100 text-red-700'
+                        <span className={`font-data rounded px-1.5 py-0.5 text-xs font-medium ${
+                          item.tier === 1 ? 'bg-action text-forest-dark' :
+                          item.tier === 2 ? 'bg-forest text-white' :
+                          'bg-pewter-mid text-white'
                         }`}>
                           T{item.tier}
                         </span>
                       )}
                       {!item.isPrimary && (
-                        <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-500">optional</span>
+                        <span className="font-data rounded bg-pewter-mid px-1.5 py-0.5 text-xs text-pewter-pale">optional</span>
                       )}
                     </div>
-                    <span className="ml-2 shrink-0 text-xs text-gray-500">
+                    <span className="ml-2 shrink-0 font-data text-xs text-pewter-pale">
                       {item.weightOz ? `${parseFloat(String(item.weightOz))} oz` : '—'}
                     </span>
                   </label>
                   {isChecked && children.length > 0 && (
-                    <div className="border-t border-gray-50 pb-1">
+                    <div className="border-t border-pewter-mid pb-1">
                       {children.map((child) => (
-                        <div key={child.id} className="flex items-center gap-2 py-1 pl-11 pr-4 text-gray-500">
-                          <span className="text-xs">&#x21B3; {child.name}</span>
-                          {child.needsCharge && <span className="text-xs text-amber-500">&#x26A1;</span>}
+                        <div key={child.id} className="flex items-center gap-2 py-1 pl-11 pr-4 text-pewter-pale">
+                          <span className="text-xs">&#x21B3; {displayName(child)}</span>
+                          {child.needsCharge && <span className="text-xs text-action">&#x26A1;</span>}
                         </div>
                       ))}
                     </div>
@@ -242,7 +246,7 @@ export function OutfitBuilder({
           type="button"
           onClick={handleSave}
           disabled={saving || !name.trim()}
-          className="rounded bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 disabled:opacity-50"
+          className="rounded border border-action bg-forest px-4 py-2 text-sm font-medium text-white hover:bg-forest-light transition-colors disabled:opacity-50"
         >
           {saving ? 'Saving...' : outfitId ? 'Update Outfit' : 'Create Outfit'}
         </button>
@@ -251,7 +255,7 @@ export function OutfitBuilder({
             type="button"
             onClick={handleDelete}
             disabled={saving}
-            className="rounded border border-red-300 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
+            className="rounded border border-red-800 px-4 py-2 text-sm font-medium text-red-400 hover:bg-red-900/20 disabled:opacity-50"
           >
             Delete Outfit
           </button>

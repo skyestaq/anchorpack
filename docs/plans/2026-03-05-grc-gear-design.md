@@ -1,4 +1,4 @@
-# GRC Gear - Design Document
+# AnchorPack - Design Document
 
 ## Brainstorming Retrospective
 

@@ -2,6 +2,7 @@ import { pgTable, uuid, text, decimal, integer, boolean, timestamp, date, unique
 
 export const gearItems = pgTable('gear_items', {
   id: uuid('id').primaryKey().defaultRandom(),
+  manufacturer: text('manufacturer'),
   name: text('name').notNull(),
   category: text('category').notNull(),
   subCategory: text('sub_category').notNull(),

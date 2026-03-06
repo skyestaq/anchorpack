@@ -12,7 +12,7 @@ export default async function NewTripPage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">New Trip</h1>
+      <h1 className="font-display text-2xl text-white">New Trip</h1>
       <TripForm outfits={allOutfits as Outfit[]} />
     </div>
   )

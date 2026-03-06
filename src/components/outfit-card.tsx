@@ -13,13 +13,13 @@ export function OutfitCard({ id, name, description, itemCount, totalWeightOz }: 
   return (
     <Link
       href={`/outfits/${id}`}
-      className="block rounded-lg border border-gray-200 bg-white p-4 hover:border-gray-300 hover:shadow-sm transition-shadow"
+      className="block rounded-lg border border-pewter-mid bg-pewter-light p-4 transition-colors hover:border-action"
     >
-      <h3 className="font-semibold text-gray-900">{name}</h3>
-      {description && <p className="mt-1 text-sm text-gray-500">{description}</p>}
-      <div className="mt-3 flex gap-4 text-xs text-gray-500">
+      <h3 className="font-display text-sm text-white">{name}</h3>
+      {description && <p className="mt-1 text-sm text-pewter-pale">{description}</p>}
+      <div className="mt-3 flex gap-4 font-data text-xs text-pewter-pale">
         <span>{itemCount} items</span>
-        <span>{lbs} lbs</span>
+        <span className="text-action">{lbs} lbs</span>
       </div>
     </Link>
   )

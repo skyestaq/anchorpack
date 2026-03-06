@@ -32,7 +32,7 @@ export default async function EditOutfitPage({
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Edit Outfit</h1>
+      <h1 className="font-display text-2xl text-white">Edit Outfit</h1>
       <OutfitBuilder
         outfitId={id}
         outfitName={outfit.name}

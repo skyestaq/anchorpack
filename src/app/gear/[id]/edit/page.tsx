@@ -28,7 +28,7 @@ export default async function EditGearPage({
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Edit: {item.name}</h1>
+      <h1 className="font-display text-2xl text-white">Edit: {item.name}</h1>
       <GearForm
         item={item as GearItem}
         parentItems={parentItems as Pick<GearItem, 'id' | 'name'>[]}

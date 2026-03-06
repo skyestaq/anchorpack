@@ -1,4 +1,4 @@
-# GRC Gear Implementation Plan
+# AnchorPack Implementation Plan
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
@@ -457,7 +457,7 @@ export function Nav() {
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <div className="flex h-14 items-center justify-between">
           <Link href="/" className="text-lg font-semibold text-gray-900">
-            GRC Gear
+            AnchorPack
           </Link>
           <div className="flex gap-6">
             {links.map((link) => (
@@ -494,7 +494,7 @@ import { Nav } from '@/components/nav'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'GRC Gear',
+  title: 'AnchorPack',
   description: 'Backpacking gear outfit builder',
 }
 
@@ -526,7 +526,7 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">GRC Gear</h1>
+      <h1 className="text-2xl font-bold">AnchorPack</h1>
       <p className="text-gray-600">Backpacking gear outfit builder.</p>
       <div className="flex gap-4">
         <Link

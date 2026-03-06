@@ -11,6 +11,7 @@ export async function createGearItem(formData: FormData) {
   const parentItemIdRaw = formData.get('parent_item_id') as string
 
   await db.insert(gearItems).values({
+    manufacturer: (formData.get('manufacturer') as string) || null,
     name: formData.get('name') as string,
     category: formData.get('category') as string,
     subCategory: formData.get('sub_category') as string,
@@ -32,6 +33,7 @@ export async function updateGearItem(id: string, formData: FormData) {
 
   await db.update(gearItems)
     .set({
+      manufacturer: (formData.get('manufacturer') as string) || null,
       name: formData.get('name') as string,
       category: formData.get('category') as string,
       subCategory: formData.get('sub_category') as string,

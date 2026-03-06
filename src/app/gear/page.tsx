@@ -18,16 +18,16 @@ export default async function GearPage() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between max-w-[75%]">
         <div>
-          <h1 className="text-2xl font-bold">Gear Inventory</h1>
-          <p className="text-sm text-gray-500">
+          <h1 className="font-display text-2xl text-white">Gear Inventory</h1>
+          <p className="font-data text-sm text-pewter-pale">
             {items.length} items &middot; {(totalWeightOz / 16).toFixed(1)} lbs total
           </p>
         </div>
         <Link
           href="/gear/new"
-          className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700"
+          className="rounded border border-action bg-forest px-4 py-2 text-sm font-medium text-white hover:bg-forest-light transition-colors"
         >
           Add Item
         </Link>

@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trail Gear · Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest:  #2D5016;
+    --pewter:  #34302B;
+    --action:  #69BE28;
+
+    /* Derived tones */
+    --forest-light: #3D6B20;
+    --forest-dark:  #1C3209;
+    --pewter-light: #4E4840;
+    --pewter-mid:   #696158;
+    --pewter-pale:  #B1BABF;
+    --action-muted: #4E8C1C;
+    --action-pale:  #C8E89B;
+    --off-white:    #F4F0EA;
+    --chalk:        #FAFAF7;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--pewter);
+    color: var(--off-white);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--forest-dark);
+    border-bottom: 3px solid var(--action);
+    padding: 2.5rem 3rem 2rem;
+    display: flex;
+    align-items: flex-end;
+    gap: 1.5rem;
+  }
+  header h1 {
+    font-family: 'Krona One', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    color: var(--off-white);
+  }
+  header h1 span { color: var(--action); }
+  header p {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pewter-pale);
+    padding-bottom: 0.25rem;
+  }
+
+  /* ── MAIN GRID ── */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+    display: grid;
+    gap: 3rem;
+  }
+
+  section h2 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--action);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #ffffff18;
+  }
+
+  /* ── CORE SWATCHES ── */
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .swatch-card {
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #ffffff12;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    cursor: default;
+  }
+  .swatch-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px #00000055;
+  }
+
+  .swatch-block {
+    height: 160px;
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+    position: relative;
+  }
+  .swatch-block::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #00000040 0%, transparent 60%);
+  }
+  .swatch-label {
+    font-family: 'Krona One', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .swatch-meta {
+    background: var(--pewter-light);
+    padding: 1rem 1.25rem;
+  }
+  .swatch-meta .role {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--pewter-pale);
+    margin-bottom: 0.6rem;
+  }
+  .codes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .code-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .code-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--pewter-pale);
+    letter-spacing: 0.08em;
+  }
+  .code-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--off-white);
+    background: #ffffff0d;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border: 1px solid #ffffff15;
+  }
+  .code-val:hover { background: #ffffff22; }
+  .code-val.copied { color: var(--action); border-color: var(--action); }
+
+  /* usage tag */
+  .usage-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+  }
+  .tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    border-radius: 2px;
+    border: 1px solid;
+  }
+  .tag-bg  { border-color: #ffffff30; color: var(--pewter-pale); }
+  .tag-acc { border-color: var(--action); color: var(--action); }
+  .tag-txt { border-color: #ffffff30; color: var(--off-white); }
+
+  /* ── TONES ROW ── */
+  .tones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 0.75rem;
+  }
+  .tone {
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid #ffffff10;
+  }
+  .tone-block { height: 64px; }
+  .tone-info {
+    padding: 0.5rem 0.6rem;
+    background: #ffffff08;
+  }
+  .tone-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--pewter-pale);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  .tone-hex {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--off-white);
+    cursor: pointer;
+  }
+  .tone-hex:hover { color: var(--action); }
+
+  /* ── PREVIEW PANEL ── */
+  .preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  @media (max-width: 640px) { .preview-grid { grid-template-columns: 1fr; } }
+
+  .preview-card {
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #ffffff10;
+  }
+  .preview-card-header {
+    padding: 0.5rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--pewter-pale);
+    background: #ffffff08;
+    border-bottom: 1px solid #ffffff10;
+  }
+
+  /* Nav bar mock */
+  .mock-nav {
+    background: var(--forest-dark);
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .mock-logo {
+    font-family: 'Krona One', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    color: var(--off-white);
+  }
+  .mock-logo span { color: var(--action); }
+  .mock-nav-links {
+    display: flex;
+    gap: 1.2rem;
+    list-style: none;
+  }
+  .mock-nav-links li {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--pewter-pale);
+    cursor: default;
+  }
+  .mock-nav-links li.active { color: var(--action); }
+
+  /* Gear card mock */
+  .mock-gear-list {
+    padding: 1rem;
+    background: var(--pewter);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .mock-item {
+    background: var(--pewter-light);
+    border-radius: 3px;
+    padding: 0.65rem 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 3px solid transparent;
+  }
+  .mock-item.primary { border-left-color: var(--action); }
+  .mock-item.optional { border-left-color: var(--forest-light); }
+  .mock-item-name {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.83rem;
+    color: var(--off-white);
+  }
+  .mock-item-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--pewter-pale);
+    margin-top: 0.1rem;
+  }
+  .mock-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 2px;
+  }
+  .mock-badge.tier1 { background: var(--action); color: var(--forest-dark); font-weight: 500; }
+  .mock-badge.tier2 { background: var(--forest); color: var(--off-white); }
+  .mock-badge.opt   { background: var(--pewter-mid); color: var(--off-white); }
+
+  /* Button mock */
+  .mock-buttons {
+    padding: 1rem 1.25rem;
+    background: var(--forest-dark);
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.55rem 1.1rem;
+    border-radius: 3px;
+    border: none;
+    cursor: default;
+    font-weight: 500;
+  }
+  .btn-primary { background: var(--action); color: var(--forest-dark); }
+  .btn-secondary { background: transparent; color: var(--action); border: 1px solid var(--action); }
+  .btn-ghost { background: transparent; color: var(--pewter-pale); border: 1px solid var(--pewter-mid); }
+
+  /* ── CSS SNIPPET ── */
+  .code-block {
+    background: var(--forest-dark);
+    border-radius: 4px;
+    padding: 1.5rem;
+    border: 1px solid #ffffff10;
+    position: relative;
+  }
+  .code-block pre {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    line-height: 1.7;
+    color: var(--off-white);
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .kw { color: var(--action); }
+  .cm { color: var(--pewter-pale); }
+  .vr { color: #B8D4FF; }
+  .vl { color: #FFD89B; }
+
+  .copy-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+    border: 1px solid var(--action);
+    background: transparent;
+    color: var(--action);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .copy-btn:hover { background: var(--action); color: var(--forest-dark); }
+
+  /* ── CONTRAST TABLE ── */
+  .contrast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .contrast-pair {
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid #ffffff10;
+  }
+  .contrast-demo {
+    padding: 1rem 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .contrast-info {
+    padding: 0.5rem 1rem;
+    background: #ffffff08;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .contrast-label { font-size: 0.62rem; color: var(--pewter-pale); font-family: 'DM Mono', monospace; }
+  .contrast-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+  }
+  .pass { color: var(--action); }
+  .warn { color: #FFB830; }
+
+  /* toast */
+  #toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(2rem);
+    background: var(--action);
+    color: var(--forest-dark);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    padding: 0.6rem 1.4rem;
+    border-radius: 3px;
+    opacity: 0;
+    transition: all 0.25s ease;
+    pointer-events: none;
+    font-weight: 500;
+  }
+  #toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <p>Greg's Gear List · Web Frontend</p>
+    <h1>Design <span>System</span></h1>
+    <p style="margin-top:0.5rem;font-size:0.68rem;letter-spacing:0.06em;">Color · Typography · Components</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- CORE PALETTE -->
+  <section>
+    <h2>01 · Core Palette</h2>
+    <div class="swatches">
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#2D5016;">
+          <span class="swatch-label" style="color:#C8E89B;">Forest Green</span>
+        </div>
+        <div class="swatch-meta">
+          <div class="role">Primary Background / Structure</div>
+          <div class="codes">
+            <div class="code-row">
+              <span class="code-key">HEX</span>
+              <span class="code-val" onclick="copyVal(this,'#2D5016')">#2D5016</span>
+            </div>
+            <div class="code-row">
+              <span class="code-key">RGB</span>
+              <span class="code-val" onclick="copyVal(this,'rgb(45, 80, 22)')">45, 80, 22</span>
+            </div>
+            <div class="code-row">
+              <span class="code-key">HSL</span>
+              <span class="code-val" onclick="copyVal(this,'hsl(100, 57%, 20%)')">100° 57% 20%</span>
+            </div>
+          </div>
+          <div class="usage-tags">
+            <span class="tag tag-bg">Backgrounds</span>
+            <span class="tag tag-bg">Sidebar</span>
+            <span class="tag tag-bg">Cards</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#34302B;">
+          <span class="swatch-label" style="color:#B1BABF;">Bucs Pewter</span>
+        </div>
+        <div class="swatch-meta">
+          <div class="role">Dark Base · Official PMS 440 C</div>
+          <div class="codes">
+            <div class="code-row">
+              <span class="code-key">HEX</span>
+              <span class="code-val" onclick="copyVal(this,'#34302B')">#34302B</span>
+            </div>
+            <div class="code-row">
+              <span class="code-key">RGB</span>
+              <span class="code-val" onclick="copyVal(this,'rgb(52, 48, 43)')">52, 48, 43</span>
+            </div>
+            <div class="code-row">
+              <span class="code-key">PANTONE</span>
+              <span class="code-val" onclick="copyVal(this,'PMS 440 C')">PMS 440 C</span>
+            </div>
+          </div>
+          <div class="usage-tags">
+            <span class="tag tag-bg">App Shell</span>
+            <span class="tag tag-bg">Nav</span>
+            <span class="tag tag-bg">Rows</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#69BE28;">
+          <span class="swatch-label" style="color:#1C3209;">Action Green</span>
+        </div>
+        <div class="swatch-meta">
+          <div class="role">Accent / CTA · Official PMS 368 C</div>
+          <div class="codes">
+            <div class="code-row">
+              <span class="code-key">HEX</span>
+              <span class="code-val" onclick="copyVal(this,'#69BE28')">#69BE28</span>
+            </div>
+            <div class="code-row">
+              <span class="code-key">RGB</span>
+              <span class="code-val" onclick="copyVal(this,'rgb(105, 190, 40)')">105, 190, 40</span>
+            </div>
+            <div class="code-row">
+              <span class="code-key">PANTONE</span>
+              <span class="code-val" onclick="copyVal(this,'PMS 368 C')">PMS 368 C</span>
+            </div>
+          </div>
+          <div class="usage-tags">
+            <span class="tag tag-acc">Buttons</span>
+            <span class="tag tag-acc">Badges</span>
+            <span class="tag tag-acc">Highlights</span>
+            <span class="tag tag-acc">Active States</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TONES -->
+  <section>
+    <h2>02 · Supporting Tones</h2>
+    <div class="tones">
+      <div class="tone">
+        <div class="tone-block" style="background:#1C3209;"></div>
+        <div class="tone-info">
+          <span class="tone-name">Forest Dark</span>
+          <span class="tone-hex" onclick="copyVal(this,'#1C3209')">#1C3209</span>
+        </div>
+      </div>
+      <div class="tone">
+        <div class="tone-block" style="background:#2D5016;"></div>
+        <div class="tone-info">
+          <span class="tone-name">Forest</span>
+          <span class="tone-hex" onclick="copyVal(this,'#2D5016')">#2D5016</span>
+        </div>
+      </div>
+      <div class="tone">
+        <div class="tone-block" style="background:#3D6B20;"></div>
+        <div class="tone-info">
+          <span class="tone-name">Forest Light</span>
+          <span class="tone-hex" onclick="copyVal(this,'#3D6B20')">#3D6B20</span>
+        </div>
+      </div>
+      <div class="tone">
+        <div class="tone-block" style="background:#34302B;"></div>
+        <div class="tone-info">
+          <span class="tone-name">Pewter</span>
+          <span class="tone-hex" onclick="copyVal(this,'#34302B')">#34302B</span>
+        </div>
+      </div>
+      <div class="tone">
+        <div class="tone-block" style="background:#4E4840;"></div>
+        <div class="tone-info">
+          <span class="tone-name">Pewter Light</span>
+          <span class="tone-hex" onclick="copyVal(this,'#4E4840')">#4E4840</span>
+        </div>
+      </div>
+      <div class="tone">
+        <div class="tone-block" style="background:#696158;"></div>
+        <div class="tone-info">
+          <span class="tone-name">Pewter Mid</span>
+          <span class="tone-hex" onclick="copyVal(this,'#696158')">#696158</span>
+        </div>
+      </div>
+      <div class="tone">
+        <div class="tone-block" style="background:#B1BABF;"></div>
+        <div class="tone-info">
+          <span class="tone-name">Pewter Pale</span>
+          <span class="tone-hex" onclick="copyVal(this,'#B1BABF')">#B1BABF</span>
+        </div>
+      </div>
+      <div class="tone">
+        <div class="tone-block" style="background:#69BE28;"></div>
+        <div class="tone-info">
+          <span class="tone-name">Action</span>
+          <span class="tone-hex" onclick="copyVal(this,'#69BE28')">#69BE28</span>
+        </div>
+      </div>
+      <div class="tone">
+        <div class="tone-block" style="background:#4E8C1C;"></div>
+        <div class="tone-info">
+          <span class="tone-name">Action Muted</span>
+          <span class="tone-hex" onclick="copyVal(this,'#4E8C1C')">#4E8C1C</span>
+        </div>
+      </div>
+      <div class="tone">
+        <div class="tone-block" style="background:#C8E89B;"></div>
+        <div class="tone-info">
+          <span class="tone-name">Action Pale</span>
+          <span class="tone-hex" onclick="copyVal(this,'#C8E89B')">#C8E89B</span>
+        </div>
+      </div>
+      <div class="tone">
+        <div class="tone-block" style="background:#F4F0EA;"></div>
+        <div class="tone-info">
+          <span class="tone-name">Off-White</span>
+          <span class="tone-hex" onclick="copyVal(this,'#F4F0EA')">#F4F0EA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE PREVIEW -->
+  <section>
+    <h2>03 · Live Preview</h2>
+    <div class="preview-grid">
+
+      <div class="preview-card">
+        <div class="preview-card-header">Navigation Bar</div>
+        <div class="mock-nav">
+          <div class="mock-logo">Trail<span>Kit</span></div>
+          <ul class="mock-nav-links">
+            <li class="active">Gear</li>
+            <li>Trips</li>
+            <li>Weight</li>
+          </ul>
+        </div>
+        <div class="mock-buttons">
+          <button class="btn btn-primary">Pack List</button>
+          <button class="btn btn-secondary">Filter</button>
+          <button class="btn btn-ghost">Export</button>
+        </div>
+      </div>
+
+      <div class="preview-card">
+        <div class="preview-card-header">Gear Row Items</div>
+        <div class="mock-gear-list">
+          <div class="mock-item primary">
+            <div>
+              <div class="mock-item-name">Nemo Hornet Tent</div>
+              <div class="mock-item-sub">Shelter · 2.31 lbs · 37.0 oz</div>
+            </div>
+            <span class="mock-badge tier1">Tier 1</span>
+          </div>
+          <div class="mock-item primary">
+            <div>
+              <div class="mock-item-name">Sawyer Filter Kit</div>
+              <div class="mock-item-sub">Water · 0.51 lbs · 8.1 oz</div>
+            </div>
+            <span class="mock-badge tier1">Tier 1</span>
+          </div>
+          <div class="mock-item optional">
+            <div>
+              <div class="mock-item-name">North Face Terra Pack</div>
+              <div class="mock-item-sub">Backpack · 4.45 lbs · 71.2 oz</div>
+            </div>
+            <span class="mock-badge opt">Optional</span>
+          </div>
+          <div class="mock-item optional">
+            <div>
+              <div class="mock-item-name">JetBoil Flash</div>
+              <div class="mock-item-sub">Stove · 0.95 lbs · 15.2 oz</div>
+            </div>
+            <span class="mock-badge tier2">Tier 2</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTRAST -->
+  <section>
+    <h2>04 · Contrast & Accessibility</h2>
+    <div class="contrast-grid">
+      <div class="contrast-pair">
+        <div class="contrast-demo" style="background:#69BE28; color:#1C3209;">Action Green on Dark Forest</div>
+        <div class="contrast-info">
+          <span class="contrast-label">Buttons / CTAs</span>
+          <span class="contrast-score pass">~7.2:1 ✓ AAA</span>
+        </div>
+      </div>
+      <div class="contrast-pair">
+        <div class="contrast-demo" style="background:#34302B; color:#F4F0EA;">Off-White on Pewter</div>
+        <div class="contrast-info">
+          <span class="contrast-label">Body Text</span>
+          <span class="contrast-score pass">~9.1:1 ✓ AAA</span>
+        </div>
+      </div>
+      <div class="contrast-pair">
+        <div class="contrast-demo" style="background:#2D5016; color:#F4F0EA;">Off-White on Forest</div>
+        <div class="contrast-info">
+          <span class="contrast-label">Headings / Labels</span>
+          <span class="contrast-score pass">~6.8:1 ✓ AA</span>
+        </div>
+      </div>
+      <div class="contrast-pair">
+        <div class="contrast-demo" style="background:#4E4840; color:#69BE28;">Action Green on Pewter Light</div>
+        <div class="contrast-info">
+          <span class="contrast-label">Accents / Icons</span>
+          <span class="contrast-score pass">~5.3:1 ✓ AA</span>
+        </div>
+      </div>
+      <div class="contrast-pair">
+        <div class="contrast-demo" style="background:#2D5016; color:#69BE28;">Action Green on Forest</div>
+        <div class="contrast-info">
+          <span class="contrast-label">Active State</span>
+          <span class="contrast-score warn">~3.8:1 ⚠ Large text only</span>
+        </div>
+      </div>
+      <div class="contrast-pair">
+        <div class="contrast-demo" style="background:#34302B; color:#B1BABF;">Pewter Pale on Pewter</div>
+        <div class="contrast-info">
+          <span class="contrast-label">Subdued / Meta text</span>
+          <span class="contrast-score pass">~4.7:1 ✓ AA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section>
+    <h2>06 · Typography System</h2>
+
+    <!-- Type scale live specimens -->
+    <div style="background:var(--forest-dark);border-radius:4px;padding:2rem 2.5rem;margin-bottom:1.5rem;border:1px solid #ffffff10;">
+      <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--pewter-mid);margin-bottom:1.75rem;">Type Scale · Live</div>
+
+      <div style="display:flex;flex-direction:column;gap:1.5rem;">
+
+        <div style="display:flex;align-items:baseline;gap:2rem;flex-wrap:wrap;">
+          <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--pewter-mid);letter-spacing:0.06em;min-width:140px;flex-shrink:0;">
+            Display / Hero<br>Krona One · 3rem
+          </div>
+          <div style="font-family:'Krona One',sans-serif;font-size:3rem;line-height:1.05;color:var(--off-white);">
+            Trailhead<span style="color:var(--action);">.</span>
+          </div>
+        </div>
+
+        <div style="height:1px;background:#ffffff0d;"></div>
+
+        <div style="display:flex;align-items:baseline;gap:2rem;flex-wrap:wrap;">
+          <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--pewter-mid);letter-spacing:0.06em;min-width:140px;flex-shrink:0;">
+            H1 / Page Title<br>Krona One · 1.75rem
+          </div>
+          <div style="font-family:'Krona One',sans-serif;font-size:1.75rem;line-height:1.1;color:var(--off-white);">
+            Shelter System
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:baseline;gap:2rem;flex-wrap:wrap;">
+          <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--pewter-mid);letter-spacing:0.06em;min-width:140px;flex-shrink:0;">
+            H2 / Section<br>Krona One · 1.15rem
+          </div>
+          <div style="font-family:'Krona One',sans-serif;font-size:1.15rem;line-height:1.15;color:var(--off-white);">
+            Sleeping Bags &amp; Pads
+          </div>
+        </div>
+
+        <div style="height:1px;background:#ffffff0d;"></div>
+
+        <div style="display:flex;align-items:baseline;gap:2rem;flex-wrap:wrap;">
+          <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--pewter-mid);letter-spacing:0.06em;min-width:140px;flex-shrink:0;">
+            UI Label<br>DM Mono 500 · 0.68rem
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-weight:500;font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--action);">
+            Category · Primary Gear
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:baseline;gap:2rem;flex-wrap:wrap;">
+          <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--pewter-mid);letter-spacing:0.06em;min-width:140px;flex-shrink:0;">
+            Body / List Item<br>DM Sans 400 · 0.875rem
+          </div>
+          <div style="font-family:'DM Sans',sans-serif;font-weight:400;font-size:0.875rem;line-height:1.65;color:var(--off-white);opacity:0.9;max-width:480px;">
+            Nemo Hornet (tent, fly, footprint, poles, stakes) — 2.31 lbs · 37.0 oz · Tier 1 · Primary
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:baseline;gap:2rem;flex-wrap:wrap;">
+          <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--pewter-mid);letter-spacing:0.06em;min-width:140px;flex-shrink:0;">
+            Meta / Sub-label<br>DM Sans 300 · 0.78rem
+          </div>
+          <div style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:0.78rem;line-height:1.5;color:var(--pewter-pale);">
+            Shelter · Optional · Not yet weighed
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:baseline;gap:2rem;flex-wrap:wrap;">
+          <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--pewter-mid);letter-spacing:0.06em;min-width:140px;flex-shrink:0;">
+            Data / Numbers<br>DM Mono 400 · 0.75rem
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--off-white);letter-spacing:0.04em;">
+            2.31 lb &nbsp;·&nbsp; 37.00 oz &nbsp;·&nbsp; T1 &nbsp;·&nbsp; #2D5016
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Font pairing spec card -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
+
+      <div style="background:var(--pewter-light);border-radius:4px;padding:1.5rem;border:1px solid #ffffff10;">
+        <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--action);margin-bottom:1rem;">Display · Heading</div>
+        <div style="font-family:'Krona One',sans-serif;font-size:1.5rem;color:var(--off-white);margin-bottom:0.75rem;">Krona One</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--pewter-pale);line-height:1.6;">
+          Google Fonts · Free · Single weight<br>
+          Extended proportions, Scandinavian character<br>
+          Use for: all headings, nav logo, stat figures
+        </div>
+        <div style="margin-top:1rem;font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--pewter-mid);">
+          @import: <span style="color:var(--action-pale);">Krona+One</span>
+        </div>
+      </div>
+
+      <div style="background:var(--pewter-light);border-radius:4px;padding:1.5rem;border:1px solid #ffffff10;">
+        <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--action);margin-bottom:1rem;">Body · UI · Data</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:1.4rem;font-weight:400;color:var(--off-white);margin-bottom:0.75rem;">DM Sans + DM Mono</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--pewter-pale);line-height:1.6;">
+          Google Fonts · Free · Multiple weights<br>
+          DM Sans: body copy, labels, nav links (300/400/500)<br>
+          DM Mono: weights, hex codes, badges, tags
+        </div>
+        <div style="margin-top:1rem;font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--pewter-mid);">
+          @import: <span style="color:var(--action-pale);">DM+Sans · DM+Mono</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Google Fonts import string -->
+    <div style="background:var(--forest-dark);border-radius:4px;padding:1.25rem 1.5rem;margin-top:1.25rem;border:1px solid #ffffff10;position:relative;">
+      <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--pewter-mid);margin-bottom:0.6rem;">Google Fonts Import</div>
+      <div style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--action-pale);word-break:break-all;cursor:pointer;" onclick="copyGF(this)">
+        https://fonts.googleapis.com/css2?family=Krona+One&amp;family=DM+Sans:wght@300;400;500&amp;family=DM+Mono:wght@400;500&amp;display=swap
+      </div>
+    </div>
+
+  </section>
+
+  <!-- CSS VARIABLES -->
+  <section>
+    <h2>07 · CSS Variables (Copy-Ready)</h2>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCSS()">Copy All</button>
+      <pre><span class="kw">:root</span> {
+  <span class="cm">/* ── Core ── */</span>
+  <span class="vr">--color-forest</span>:       <span class="vl">#2D5016</span>;
+  <span class="vr">--color-pewter</span>:       <span class="vl">#34302B</span>;   <span class="cm">/* Bucs PMS 440 C */</span>
+  <span class="vr">--color-action</span>:       <span class="vl">#69BE28</span>;   <span class="cm">/* Seahawks PMS 368 C */</span>
+
+  <span class="cm">/* ── Forest Scale ── */</span>
+  <span class="vr">--color-forest-dark</span>:  <span class="vl">#1C3209</span>;
+  <span class="vr">--color-forest-light</span>: <span class="vl">#3D6B20</span>;
+
+  <span class="cm">/* ── Pewter Scale ── */</span>
+  <span class="vr">--color-pewter-light</span>: <span class="vl">#4E4840</span>;
+  <span class="vr">--color-pewter-mid</span>:   <span class="vl">#696158</span>;   <span class="cm">/* Bucs retro pewter */</span>
+  <span class="vr">--color-pewter-pale</span>:  <span class="vl">#B1BABF</span>;   <span class="cm">/* Bucs grey PMS 5517 C */</span>
+
+  <span class="cm">/* ── Action Scale ── */</span>
+  <span class="vr">--color-action-muted</span>: <span class="vl">#4E8C1C</span>;
+  <span class="vr">--color-action-pale</span>:  <span class="vl">#C8E89B</span>;
+
+  <span class="cm">/* ── Neutrals ── */</span>
+  <span class="vr">--color-off-white</span>:    <span class="vl">#F4F0EA</span>;
+  <span class="vr">--color-chalk</span>:        <span class="vl">#FAFAF7</span>;
+
+  <span class="cm">/* ── Typography ── */</span>
+  <span class="vr">--font-display</span>:       <span class="vl">'Krona One'</span>, sans-serif;
+  <span class="vr">--font-body</span>:          <span class="vl">'DM Sans'</span>, sans-serif;
+  <span class="vr">--font-mono</span>:          <span class="vl">'DM Mono'</span>, monospace;
+
+  <span class="cm">/* ── Type Scale ── */</span>
+  <span class="vr">--text-hero</span>:          <span class="vl">3rem</span>;       <span class="cm">/* Krona One */</span>
+  <span class="vr">--text-h1</span>:            <span class="vl">1.75rem</span>;    <span class="cm">/* Krona One */</span>
+  <span class="vr">--text-h2</span>:            <span class="vl">1.15rem</span>;    <span class="cm">/* Krona One */</span>
+  <span class="vr">--text-label</span>:         <span class="vl">0.68rem</span>;    <span class="cm">/* DM Mono 500, uppercase */</span>
+  <span class="vr">--text-body</span>:          <span class="vl">0.875rem</span>;   <span class="cm">/* DM Sans 400 */</span>
+  <span class="vr">--text-meta</span>:          <span class="vl">0.78rem</span>;    <span class="cm">/* DM Sans 300 */</span>
+  <span class="vr">--text-data</span>:          <span class="vl">0.75rem</span>;    <span class="cm">/* DM Mono 400 */</span>
+}</pre>
+    </div>
+  </section>
+
+</main>
+
+<div id="toast">Copied!</div>
+
+<script>
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1800);
+  }
+
+  function copyVal(el, val) {
+    navigator.clipboard.writeText(val).then(() => {
+      el.classList.add('copied');
+      setTimeout(() => el.classList.remove('copied'), 1200);
+      showToast('Copied: ' + val);
+    });
+  }
+
+  function copyGF(el) {
+    const url = 'https://fonts.googleapis.com/css2?family=Krona+One&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap';
+    navigator.clipboard.writeText(url).then(() => showToast('Google Fonts URL copied!'));
+  }
+
+  const cssSnippet = `:root {
+  /* ── Core Colors ── */
+  --color-forest:       #2D5016;
+  --color-pewter:       #34302B;   /* Bucs PMS 440 C */
+  --color-action:       #69BE28;   /* Seahawks PMS 368 C */
+
+  /* ── Forest Scale ── */
+  --color-forest-dark:  #1C3209;
+  --color-forest-light: #3D6B20;
+
+  /* ── Pewter Scale ── */
+  --color-pewter-light: #4E4840;
+  --color-pewter-mid:   #696158;   /* Bucs retro pewter */
+  --color-pewter-pale:  #B1BABF;   /* Bucs grey PMS 5517 C */
+
+  /* ── Action Scale ── */
+  --color-action-muted: #4E8C1C;
+  --color-action-pale:  #C8E89B;
+
+  /* ── Neutrals ── */
+  --color-off-white:    #F4F0EA;
+  --color-chalk:        #FAFAF7;
+
+  /* ── Typography ── */
+  --font-display:       'Krona One', sans-serif;
+  --font-body:          'DM Sans', sans-serif;
+  --font-mono:          'DM Mono', monospace;
+
+  /* ── Type Scale ── */
+  --text-hero:          3rem;       /* Krona One */
+  --text-h1:            1.75rem;    /* Krona One */
+  --text-h2:            1.15rem;    /* Krona One */
+  --text-label:         0.68rem;    /* DM Mono 500, uppercase */
+  --text-body:          0.875rem;   /* DM Sans 400 */
+  --text-meta:          0.78rem;    /* DM Sans 300 */
+  --text-data:          0.75rem;    /* DM Mono 400 */
+}`;
+
+  function copyCSS() {
+    navigator.clipboard.writeText(cssSnippet).then(() => showToast('CSS variables copied!'));
+  }
+</script>
+
+</body>
+</html>

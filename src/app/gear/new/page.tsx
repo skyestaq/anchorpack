@@ -13,7 +13,7 @@ export default async function NewGearPage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Add Gear Item</h1>
+      <h1 className="font-display text-2xl text-white">Add Gear Item</h1>
       <GearForm parentItems={parentItems as Pick<GearItem, 'id' | 'name'>[]} />
     </div>
   )

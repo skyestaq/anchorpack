@@ -10,6 +10,8 @@ interface GearFormProps {
   parentItems: Pick<GearItem, 'id' | 'name'>[]
 }
 
+const inputClass = 'mt-1 w-full rounded border border-pewter-mid bg-pewter px-3 py-2 text-sm text-white placeholder-pewter-mid focus:border-action focus:outline-none focus:ring-1 focus:ring-action'
+
 export function GearForm({ item, parentItems }: GearFormProps) {
   const router = useRouter()
   const [saving, setSaving] = useState(false)
@@ -41,54 +43,68 @@ export function GearForm({ item, parentItems }: GearFormProps) {
 
   return (
     <form action={handleSubmit} className="max-w-lg space-y-4">
-      <div>
-        <label className="block text-sm font-medium">Name</label>
-        <input
-          name="name"
-          defaultValue={item?.name}
-          required
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
-        />
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs font-medium uppercase tracking-wider text-pewter-pale">
+            Manufacturer <span className="text-pewter-mid normal-case">(optional)</span>
+          </label>
+          <input
+            name="manufacturer"
+            defaultValue={item?.manufacturer ?? ''}
+            className={inputClass}
+            placeholder="e.g., Nemo"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-medium uppercase tracking-wider text-pewter-pale">Item</label>
+          <input
+            name="name"
+            defaultValue={item?.name}
+            required
+            className={inputClass}
+            placeholder="e.g., Hornet"
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium">Category</label>
+          <label className="block text-xs font-medium uppercase tracking-wider text-pewter-pale">Category</label>
           <input
             name="category"
             defaultValue={item?.category}
             required
-            className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+            className={inputClass}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium">Sub-Category</label>
+          <label className="block text-xs font-medium uppercase tracking-wider text-pewter-pale">Sub-Category</label>
           <input
             name="sub_category"
             defaultValue={item?.subCategory}
             required
-            className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+            className={inputClass}
           />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium">Weight (oz)</label>
+          <label className="block text-xs font-medium uppercase tracking-wider text-pewter-pale">Weight (oz)</label>
           <input
             name="weight_oz"
             type="number"
             step="0.01"
             defaultValue={item?.weightOz ?? ''}
-            className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+            className={inputClass}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium">Tier</label>
+          <label className="block text-xs font-medium uppercase tracking-wider text-pewter-pale">Tier</label>
           <select
             name="tier"
             defaultValue={item?.tier ?? ''}
-            className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+            className={inputClass}
           >
             <option value="">None</option>
             <option value="1">Tier 1</option>
@@ -99,11 +115,11 @@ export function GearForm({ item, parentItems }: GearFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Parent Item</label>
+        <label className="block text-xs font-medium uppercase tracking-wider text-pewter-pale">Parent Item</label>
         <select
           name="parent_item_id"
           defaultValue={item?.parentItemId ?? ''}
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+          className={inputClass}
         >
           <option value="">None (top-level item)</option>
           {parentItems.map((p) => (
@@ -113,27 +129,27 @@ export function GearForm({ item, parentItems }: GearFormProps) {
       </div>
 
       <div className="flex gap-6">
-        <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" name="is_primary" defaultChecked={item?.isPrimary ?? true} />
+        <label className="flex items-center gap-2 text-sm text-pewter-pale">
+          <input type="checkbox" name="is_primary" defaultChecked={item?.isPrimary ?? true} className="accent-action" />
           Primary
         </label>
-        <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" name="is_weighed" defaultChecked={item?.isWeighed ?? false} />
+        <label className="flex items-center gap-2 text-sm text-pewter-pale">
+          <input type="checkbox" name="is_weighed" defaultChecked={item?.isWeighed ?? false} className="accent-action" />
           Weighed
         </label>
-        <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" name="needs_charge" defaultChecked={item?.needsCharge ?? false} />
+        <label className="flex items-center gap-2 text-sm text-pewter-pale">
+          <input type="checkbox" name="needs_charge" defaultChecked={item?.needsCharge ?? false} className="accent-action" />
           Needs Charge
         </label>
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Notes</label>
+        <label className="block text-xs font-medium uppercase tracking-wider text-pewter-pale">Notes</label>
         <textarea
           name="notes"
           defaultValue={item?.notes ?? ''}
           rows={2}
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+          className={inputClass}
         />
       </div>
 
@@ -141,14 +157,14 @@ export function GearForm({ item, parentItems }: GearFormProps) {
         <button
           type="submit"
           disabled={saving}
-          className="rounded bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 disabled:opacity-50"
+          className="rounded border border-action bg-forest px-4 py-2 text-sm font-medium text-white hover:bg-forest-light transition-colors disabled:opacity-50"
         >
           {saving ? 'Saving...' : item ? 'Update' : 'Add Item'}
         </button>
         <button
           type="button"
           onClick={() => router.back()}
-          className="rounded border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-100"
+          className="rounded border border-pewter-mid px-4 py-2 text-sm font-medium text-pewter-pale hover:border-pewter-pale transition-colors"
         >
           Cancel
         </button>
@@ -157,7 +173,7 @@ export function GearForm({ item, parentItems }: GearFormProps) {
             type="button"
             onClick={handleDelete}
             disabled={saving}
-            className="ml-auto rounded border border-red-300 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
+            className="ml-auto rounded border border-red-800 px-4 py-2 text-sm font-medium text-red-400 hover:bg-red-900/20 disabled:opacity-50"
           >
             Delete
           </button>

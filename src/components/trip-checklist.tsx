@@ -65,21 +65,19 @@ export function TripChecklist({ tripId, entries: initialEntries }: TripChecklist
   return (
     <div className="space-y-6">
       {/* Progress */}
-      <div className="rounded-lg border border-gray-200 bg-white p-4">
+      <div className="rounded-lg border border-pewter-mid bg-pewter-light p-4">
         <div className="flex items-baseline justify-between">
-          <span className="text-sm font-medium text-gray-600">Packing Progress</span>
-          <span className="text-lg font-bold">{packedCount}/{totalItems} packed</span>
+          <span className="text-xs font-medium uppercase tracking-wider text-pewter-pale">Packing Progress</span>
+          <span className="font-display text-lg text-white">{packedCount}/{totalItems} packed</span>
         </div>
-        <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-gray-100">
+        <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-pewter">
           <div
-            className={`h-full rounded-full transition-all duration-300 ${
-              progressPercent === 100 ? 'bg-green-500' : 'bg-gray-900'
-            }`}
+            className="h-full rounded-full bg-action transition-all duration-300"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
         {chargeNeeded.length > 0 && (
-          <p className="mt-2 text-xs text-amber-600">
+          <p className="mt-2 font-data text-xs text-action">
             ⚡ {chargedCount}/{chargeNeeded.length} charged
           </p>
         )}
@@ -92,15 +90,15 @@ export function TripChecklist({ tripId, entries: initialEntries }: TripChecklist
         return (
           <div
             key={category}
-            className={`rounded-lg border bg-white ${
-              allPacked ? 'border-green-200' : 'border-gray-200'
+            className={`overflow-hidden rounded-lg border bg-pewter-light ${
+              allPacked ? 'border-action' : 'border-pewter-mid'
             }`}
           >
-            <div className={`flex items-center justify-between rounded-t-lg border-b px-4 py-2 ${
-              allPacked ? 'border-green-100 bg-green-50' : 'border-gray-100'
+            <div className={`flex items-center justify-between border-b px-4 py-2 ${
+              allPacked ? 'border-action/30 bg-forest/20' : 'border-pewter-mid'
             }`}>
-              <span className="text-sm font-semibold">{category}</span>
-              <span className={`text-xs ${allPacked ? 'text-green-600' : 'text-gray-500'}`}>
+              <span className="text-sm font-medium text-white">{category}</span>
+              <span className={`font-data text-xs ${allPacked ? 'text-action' : 'text-pewter-pale'}`}>
                 {allPacked ? '✓ Done' : `${catPacked}/${catEntries.length}`}
               </span>
             </div>
@@ -108,28 +106,24 @@ export function TripChecklist({ tripId, entries: initialEntries }: TripChecklist
               {catEntries.map((entry) => (
                 <div
                   key={entry.checklist.id}
-                  className="flex items-center justify-between px-4 py-2.5 hover:bg-gray-50"
+                  className="flex items-center justify-between px-4 py-2.5 hover:bg-pewter transition-colors"
                 >
                   <label className="flex cursor-pointer items-center gap-3">
                     <input
                       type="checkbox"
                       checked={entry.checklist.isPacked}
                       onChange={() => togglePacked(entry)}
-                      className="h-4 w-4 rounded border-gray-300"
+                      className="h-4 w-4 rounded accent-action"
                     />
-                    <span className={`text-sm ${entry.checklist.isPacked ? 'text-gray-400 line-through' : ''}`}>
-                      {entry.gear.name}
+                    <span className={`text-sm ${entry.checklist.isPacked ? 'text-pewter-mid line-through' : 'text-white'}`}>
+                      {entry.gear.manufacturer ? `${entry.gear.manufacturer} ${entry.gear.name}` : entry.gear.name}
                     </span>
                   </label>
                   {entry.gear.needsCharge && (
                     <button
                       type="button"
                       onClick={() => toggleCharged(entry)}
-                      className={`rounded px-2 py-1 text-xs font-medium transition-colors ${
-                        entry.checklist.isCharged
-                          ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                          : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
-                      }`}
+                      className="rounded border border-action bg-forest px-2 py-1 font-data text-xs font-medium text-white hover:bg-forest-light transition-colors"
                     >
                       {entry.checklist.isCharged ? '⚡ Charged' : '⚡ Charge?'}
                     </button>
@@ -146,7 +140,7 @@ export function TripChecklist({ tripId, entries: initialEntries }: TripChecklist
         <button
           type="button"
           onClick={handleDelete}
-          className="rounded border border-red-300 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+          className="rounded border border-red-800 px-4 py-2 text-sm font-medium text-red-400 hover:bg-red-900/20 transition-colors"
         >
           Delete Trip
         </button>
