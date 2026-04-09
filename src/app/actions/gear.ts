@@ -23,7 +23,7 @@ export async function createGearItem(formData: FormData) {
     parentItemId: parentItemIdRaw || null,
     notes: (formData.get('notes') as string) || null,
   })
-  revalidatePath('/gear')
+  revalidatePath('/gear', 'layout')
 }
 
 export async function updateGearItem(id: string, formData: FormData) {
@@ -46,10 +46,10 @@ export async function updateGearItem(id: string, formData: FormData) {
       notes: (formData.get('notes') as string) || null,
     })
     .where(eq(gearItems.id, id))
-  revalidatePath('/gear')
+  revalidatePath('/gear', 'layout')
 }
 
 export async function deleteGearItem(id: string) {
   await db.delete(gearItems).where(eq(gearItems.id, id))
-  revalidatePath('/gear')
+  revalidatePath('/gear', 'layout')
 }

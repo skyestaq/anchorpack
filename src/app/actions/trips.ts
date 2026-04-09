@@ -29,13 +29,13 @@ export async function createTrip(name: string, outfitId: string, date: string | 
     )
   }
 
-  revalidatePath('/trips')
+  revalidatePath('/trips', 'layout')
   redirect(`/trips/${trip.id}`)
 }
 
 export async function deleteTrip(id: string) {
   await db.delete(trips).where(eq(trips.id, id))
-  revalidatePath('/trips')
+  revalidatePath('/trips', 'layout')
   redirect('/trips')
 }
 

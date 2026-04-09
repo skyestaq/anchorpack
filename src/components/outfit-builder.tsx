@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { unstable_rethrow } from 'next/navigation'
 import { GearItem } from '@/types/database'
 import { createOutfit, updateOutfit, deleteOutfit } from '@/app/actions/outfits'
 
@@ -33,6 +34,7 @@ export function OutfitBuilder({
   const [description, setDescription] = useState(outfitDescription)
   const [selected, setSelected] = useState<Set<string>>(new Set(initialSelectedIds))
   const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   // Top-level items only
   const topLevel = allItems.filter((i) => i.parentItemId === null)
@@ -104,6 +106,7 @@ export function OutfitBuilder({
   async function handleSave() {
     if (!name.trim()) return
     setSaving(true)
+    setError(null)
     try {
       const ids = Array.from(selected)
       if (outfitId) {
@@ -111,6 +114,9 @@ export function OutfitBuilder({
       } else {
         await createOutfit(name, description, ids)
       }
+    } catch (err) {
+      unstable_rethrow(err)
+      setError(err instanceof Error ? err.message : 'Failed to save outfit')
     } finally {
       setSaving(false)
     }
@@ -119,8 +125,12 @@ export function OutfitBuilder({
   async function handleDelete() {
     if (!outfitId || !confirm('Delete this outfit?')) return
     setSaving(true)
+    setError(null)
     try {
       await deleteOutfit(outfitId)
+    } catch (err) {
+      unstable_rethrow(err)
+      setError(err instanceof Error ? err.message : 'Failed to delete outfit')
     } finally {
       setSaving(false)
     }
@@ -241,24 +251,31 @@ export function OutfitBuilder({
       ))}
 
       {/* Actions */}
-      <div className="flex gap-3">
-        <button
-          type="button"
-          onClick={handleSave}
-          disabled={saving || !name.trim()}
-          className="rounded border border-action bg-forest px-4 py-2 text-sm font-medium text-white hover:bg-forest-light transition-colors disabled:opacity-50"
-        >
-          {saving ? 'Saving...' : outfitId ? 'Update Outfit' : 'Create Outfit'}
-        </button>
-        {outfitId && (
+      <div className="space-y-2">
+        <div className="flex gap-3">
           <button
             type="button"
-            onClick={handleDelete}
-            disabled={saving}
-            className="rounded border border-red-800 px-4 py-2 text-sm font-medium text-red-400 hover:bg-red-900/20 disabled:opacity-50"
+            onClick={handleSave}
+            disabled={saving || !name.trim()}
+            className="rounded border border-action bg-forest px-4 py-2 text-sm font-medium text-white hover:bg-forest-light transition-colors disabled:opacity-50"
           >
-            Delete Outfit
+            {saving ? 'Saving...' : outfitId ? 'Update Outfit' : 'Create Outfit'}
           </button>
+          {outfitId && (
+            <button
+              type="button"
+              onClick={handleDelete}
+              disabled={saving}
+              className="rounded border border-red-800 px-4 py-2 text-sm font-medium text-red-400 hover:bg-red-900/20 disabled:opacity-50"
+            >
+              Delete Outfit
+            </button>
+          )}
+        </div>
+        {error && (
+          <p role="alert" className="rounded border border-red-800 bg-red-900/20 px-3 py-2 text-sm text-red-400">
+            {error}
+          </p>
         )}
       </div>
     </div>
