@@ -200,7 +200,7 @@ export function OutfitBuilder({
           className="inline-flex items-center gap-2 self-start rounded border border-action bg-forest px-3 py-1 text-xs font-medium text-white hover:bg-forest-light transition-colors"
           aria-label={`Stop filtering by ${filterCategory}`}
         >
-          <span>Showing: {filterCategory}</span>
+          <span aria-hidden="true">Showing: {filterCategory}</span>
           <span aria-hidden="true">✕</span>
         </button>
       )}
@@ -243,62 +243,62 @@ export function OutfitBuilder({
           {Object.entries(categories)
             .filter(([category]) => filterCategory === null || category === filterCategory)
             .map(([category, catItems]) => (
-            <div
-              key={category}
-              data-category-section={category}
-              className="overflow-hidden rounded-lg border border-pewter-mid bg-pewter-light scroll-mt-4"
-            >
-              <div className="border-b border-pewter-mid px-4 py-2">
-                <span className="text-sm font-medium text-white">{category}</span>
+              <div
+                key={category}
+                data-category-section={category}
+                className="overflow-hidden rounded-lg border border-pewter-mid bg-pewter-light scroll-mt-4"
+              >
+                <div className="border-b border-pewter-mid px-4 py-2">
+                  <span className="text-sm font-medium text-white">{category}</span>
+                </div>
+                <div>
+                  {catItems.map((item) => {
+                    const children = childrenMap[item.id] ?? []
+                    const isChecked = selected.has(item.id)
+                    return (
+                      <div key={item.id}>
+                        <label className={`flex cursor-pointer items-center justify-between px-4 py-2.5 hover:bg-pewter transition-colors border-l-2 ${item.isPrimary ? 'border-action' : 'border-forest-light'}`}>
+                          <div className="flex items-center gap-3">
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              onChange={() => toggleItem(item.id)}
+                              className="h-4 w-4 rounded accent-action"
+                            />
+                            <span className="text-sm text-white">{displayName(item)}</span>
+                            {item.tier && (
+                              <span className={`font-data rounded px-1.5 py-0.5 text-xs font-medium ${
+                                item.tier === 1 ? 'bg-action text-forest-dark' :
+                                item.tier === 2 ? 'bg-forest text-white' :
+                                'bg-pewter-mid text-white'
+                              }`}>
+                                T{item.tier}
+                              </span>
+                            )}
+                            {!item.isPrimary && (
+                              <span className="font-data rounded bg-pewter-mid px-1.5 py-0.5 text-xs text-pewter-pale">optional</span>
+                            )}
+                          </div>
+                          <span className="ml-2 shrink-0 font-data text-xs text-pewter-pale">
+                            {item.weightOz ? `${parseFloat(String(item.weightOz))} oz` : '—'}
+                          </span>
+                        </label>
+                        {isChecked && children.length > 0 && (
+                          <div className="border-t border-pewter-mid pb-1">
+                            {children.map((child) => (
+                              <div key={child.id} className="flex items-center gap-2 py-1 pl-11 pr-4 text-pewter-pale">
+                                <span className="text-xs">&#x21B3; {displayName(child)}</span>
+                                {child.needsCharge && <span className="text-xs text-action">&#x26A1;</span>}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
-              <div>
-                {catItems.map((item) => {
-                  const children = childrenMap[item.id] ?? []
-                  const isChecked = selected.has(item.id)
-                  return (
-                    <div key={item.id}>
-                      <label className={`flex cursor-pointer items-center justify-between px-4 py-2.5 hover:bg-pewter transition-colors border-l-2 ${item.isPrimary ? 'border-action' : 'border-forest-light'}`}>
-                        <div className="flex items-center gap-3">
-                          <input
-                            type="checkbox"
-                            checked={isChecked}
-                            onChange={() => toggleItem(item.id)}
-                            className="h-4 w-4 rounded accent-action"
-                          />
-                          <span className="text-sm text-white">{displayName(item)}</span>
-                          {item.tier && (
-                            <span className={`font-data rounded px-1.5 py-0.5 text-xs font-medium ${
-                              item.tier === 1 ? 'bg-action text-forest-dark' :
-                              item.tier === 2 ? 'bg-forest text-white' :
-                              'bg-pewter-mid text-white'
-                            }`}>
-                              T{item.tier}
-                            </span>
-                          )}
-                          {!item.isPrimary && (
-                            <span className="font-data rounded bg-pewter-mid px-1.5 py-0.5 text-xs text-pewter-pale">optional</span>
-                          )}
-                        </div>
-                        <span className="ml-2 shrink-0 font-data text-xs text-pewter-pale">
-                          {item.weightOz ? `${parseFloat(String(item.weightOz))} oz` : '—'}
-                        </span>
-                      </label>
-                      {isChecked && children.length > 0 && (
-                        <div className="border-t border-pewter-mid pb-1">
-                          {children.map((child) => (
-                            <div key={child.id} className="flex items-center gap-2 py-1 pl-11 pr-4 text-pewter-pale">
-                              <span className="text-xs">&#x21B3; {displayName(child)}</span>
-                              {child.needsCharge && <span className="text-xs text-action">&#x26A1;</span>}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
 
