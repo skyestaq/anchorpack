@@ -29,6 +29,7 @@ export function CategoryRail({
       <ul>
         {categories.map((cat) => {
           const isFiltered = filterCategory === cat.name
+          // Scrollspy highlight only applies when not filtered — only one section is visible during filter mode
           const isVisible = visibleCategory === cat.name && filterCategory === null
           return (
             <li
@@ -53,7 +54,9 @@ export function CategoryRail({
                 aria-label={
                   isFiltered ? `Stop filtering by ${cat.name}` : `Filter to ${cat.name}`
                 }
-                title={isFiltered ? 'Show all categories' : `Focus on ${cat.name}`}
+                title={
+                  isFiltered ? `Stop filtering by ${cat.name}` : `Filter to ${cat.name}`
+                }
                 className={`px-2 text-base flex items-center ${
                   isFiltered
                     ? 'text-action'

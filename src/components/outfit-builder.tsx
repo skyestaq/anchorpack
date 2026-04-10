@@ -216,7 +216,6 @@ export function OutfitBuilder({
         <div className="flex-1 min-w-0 space-y-4">
           {Object.entries(categories).map(([category, catItems]) => (
             <div
-              id={`cat-${category}`}
               key={category}
               data-category-section={category}
               className="overflow-hidden rounded-lg border border-pewter-mid bg-pewter-light scroll-mt-4"
