@@ -36,6 +36,7 @@ export function OutfitBuilder({
   const [selected, setSelected] = useState<Set<string>>(new Set(initialSelectedIds))
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [filterCategory, setFilterCategory] = useState<string | null>(null)
 
   // Top-level items only
   const topLevel = allItems.filter((i) => i.parentItemId === null)
@@ -154,6 +155,10 @@ export function OutfitBuilder({
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  function handleToggleFilter(category: string) {
+    setFilterCategory((prev) => (prev === category ? null : category))
+  }
+
   return (
     <div className="space-y-6">
       {/* Name & Description */}
@@ -188,6 +193,18 @@ export function OutfitBuilder({
         <p className="mt-2 font-data text-xs text-pewter-mid">{selected.size} items selected</p>
       </div>
 
+      {filterCategory && (
+        <button
+          type="button"
+          onClick={() => setFilterCategory(null)}
+          className="inline-flex items-center gap-2 self-start rounded border border-action bg-forest px-3 py-1 text-xs font-medium text-white hover:bg-forest-light transition-colors"
+          aria-label={`Stop filtering by ${filterCategory}`}
+        >
+          <span>Showing: {filterCategory}</span>
+          <span aria-hidden="true">✕</span>
+        </button>
+      )}
+
       {/* Quick Select */}
       <div className="flex flex-wrap gap-2">
         <button
@@ -217,13 +234,15 @@ export function OutfitBuilder({
       <div className="md:flex md:gap-4">
         <CategoryRail
           categories={categoryEntries}
-          filterCategory={null}
+          filterCategory={filterCategory}
           visibleCategory={null}
           onJumpTo={handleJumpTo}
-          onToggleFilter={() => {}}
+          onToggleFilter={handleToggleFilter}
         />
         <div className="flex-1 min-w-0 space-y-4">
-          {Object.entries(categories).map(([category, catItems]) => (
+          {Object.entries(categories)
+            .filter(([category]) => filterCategory === null || category === filterCategory)
+            .map(([category, catItems]) => (
             <div
               key={category}
               data-category-section={category}
