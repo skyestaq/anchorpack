@@ -145,6 +145,15 @@ export function OutfitBuilder({
     }
   }
 
+  function handleJumpTo(category: string) {
+    // Look up by data attribute, not id — categories contain spaces (e.g. "Campsite Bag")
+    // which would break CSS selectors. Quoted attribute selectors handle any value.
+    const el = document.querySelector(
+      `[data-category-section="${CSS.escape(category)}"]`
+    )
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <div className="space-y-6">
       {/* Name & Description */}
@@ -210,7 +219,7 @@ export function OutfitBuilder({
           categories={categoryEntries}
           filterCategory={null}
           visibleCategory={null}
-          onJumpTo={() => {}}
+          onJumpTo={handleJumpTo}
           onToggleFilter={() => {}}
         />
         <div className="flex-1 min-w-0 space-y-4">
