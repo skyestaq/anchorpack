@@ -226,7 +226,7 @@ export function OutfitBuilder({
           className="inline-flex items-center gap-2 self-start rounded border border-action bg-forest px-3 py-1 text-xs font-medium text-white hover:bg-forest-light transition-colors"
           aria-label={`Stop filtering by ${filterCategory}`}
         >
-          <span aria-hidden="true">Showing: {filterCategory}</span>
+          <span>Showing: {filterCategory}</span>
           <span aria-hidden="true">✕</span>
         </button>
       )}
