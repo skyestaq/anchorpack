@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { unstable_rethrow } from 'next/navigation'
 import { GearItem } from '@/types/database'
 import { createOutfit, updateOutfit, deleteOutfit } from '@/app/actions/outfits'
+import { CategoryRail, type CategoryEntry } from './category-rail'
 
 interface OutfitBuilderProps {
   outfitId?: string
@@ -54,6 +55,14 @@ export function OutfitBuilder({
     }
     return acc
   }, {})
+
+  const categoryEntries: CategoryEntry[] = Object.entries(categories).map(
+    ([name, items]) => ({
+      name,
+      total: items.length,
+      selected: items.filter((i) => selected.has(i.id)).length,
+    })
+  )
 
   function toggleItem(itemId: string) {
     setSelected((prev) => {
@@ -195,60 +204,76 @@ export function OutfitBuilder({
         </button>
       </div>
 
-      {/* Gear by Category */}
-      {Object.entries(categories).map(([category, catItems]) => (
-        <div key={category} className="overflow-hidden rounded-lg border border-pewter-mid bg-pewter-light">
-          <div className="border-b border-pewter-mid px-4 py-2">
-            <span className="text-sm font-medium text-white">{category}</span>
-          </div>
-          <div>
-            {catItems.map((item) => {
-              const children = childrenMap[item.id] ?? []
-              const isChecked = selected.has(item.id)
-              return (
-                <div key={item.id}>
-                  <label className={`flex cursor-pointer items-center justify-between px-4 py-2.5 hover:bg-pewter transition-colors border-l-2 ${item.isPrimary ? 'border-action' : 'border-forest-light'}`}>
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={() => toggleItem(item.id)}
-                        className="h-4 w-4 rounded accent-action"
-                      />
-                      <span className="text-sm text-white">{displayName(item)}</span>
-                      {item.tier && (
-                        <span className={`font-data rounded px-1.5 py-0.5 text-xs font-medium ${
-                          item.tier === 1 ? 'bg-action text-forest-dark' :
-                          item.tier === 2 ? 'bg-forest text-white' :
-                          'bg-pewter-mid text-white'
-                        }`}>
-                          T{item.tier}
-                        </span>
-                      )}
-                      {!item.isPrimary && (
-                        <span className="font-data rounded bg-pewter-mid px-1.5 py-0.5 text-xs text-pewter-pale">optional</span>
-                      )}
-                    </div>
-                    <span className="ml-2 shrink-0 font-data text-xs text-pewter-pale">
-                      {item.weightOz ? `${parseFloat(String(item.weightOz))} oz` : '—'}
-                    </span>
-                  </label>
-                  {isChecked && children.length > 0 && (
-                    <div className="border-t border-pewter-mid pb-1">
-                      {children.map((child) => (
-                        <div key={child.id} className="flex items-center gap-2 py-1 pl-11 pr-4 text-pewter-pale">
-                          <span className="text-xs">&#x21B3; {displayName(child)}</span>
-                          {child.needsCharge && <span className="text-xs text-action">&#x26A1;</span>}
+      {/* Gear by Category with rail */}
+      <div className="md:flex md:gap-4">
+        <CategoryRail
+          categories={categoryEntries}
+          filterCategory={null}
+          visibleCategory={null}
+          onJumpTo={() => {}}
+          onToggleFilter={() => {}}
+        />
+        <div className="flex-1 min-w-0 space-y-4">
+          {Object.entries(categories).map(([category, catItems]) => (
+            <div
+              id={`cat-${category}`}
+              key={category}
+              data-category-section={category}
+              className="overflow-hidden rounded-lg border border-pewter-mid bg-pewter-light scroll-mt-4"
+            >
+              <div className="border-b border-pewter-mid px-4 py-2">
+                <span className="text-sm font-medium text-white">{category}</span>
+              </div>
+              <div>
+                {catItems.map((item) => {
+                  const children = childrenMap[item.id] ?? []
+                  const isChecked = selected.has(item.id)
+                  return (
+                    <div key={item.id}>
+                      <label className={`flex cursor-pointer items-center justify-between px-4 py-2.5 hover:bg-pewter transition-colors border-l-2 ${item.isPrimary ? 'border-action' : 'border-forest-light'}`}>
+                        <div className="flex items-center gap-3">
+                          <input
+                            type="checkbox"
+                            checked={isChecked}
+                            onChange={() => toggleItem(item.id)}
+                            className="h-4 w-4 rounded accent-action"
+                          />
+                          <span className="text-sm text-white">{displayName(item)}</span>
+                          {item.tier && (
+                            <span className={`font-data rounded px-1.5 py-0.5 text-xs font-medium ${
+                              item.tier === 1 ? 'bg-action text-forest-dark' :
+                              item.tier === 2 ? 'bg-forest text-white' :
+                              'bg-pewter-mid text-white'
+                            }`}>
+                              T{item.tier}
+                            </span>
+                          )}
+                          {!item.isPrimary && (
+                            <span className="font-data rounded bg-pewter-mid px-1.5 py-0.5 text-xs text-pewter-pale">optional</span>
+                          )}
                         </div>
-                      ))}
+                        <span className="ml-2 shrink-0 font-data text-xs text-pewter-pale">
+                          {item.weightOz ? `${parseFloat(String(item.weightOz))} oz` : '—'}
+                        </span>
+                      </label>
+                      {isChecked && children.length > 0 && (
+                        <div className="border-t border-pewter-mid pb-1">
+                          {children.map((child) => (
+                            <div key={child.id} className="flex items-center gap-2 py-1 pl-11 pr-4 text-pewter-pale">
+                              <span className="text-xs">&#x21B3; {displayName(child)}</span>
+                              {child.needsCharge && <span className="text-xs text-action">&#x26A1;</span>}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
 
       {/* Actions */}
       <div className="space-y-2">
