@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { unstable_rethrow } from 'next/navigation'
 import { GearItem } from '@/types/database'
 import { createOutfit, updateOutfit, deleteOutfit } from '@/app/actions/outfits'
@@ -37,6 +37,7 @@ export function OutfitBuilder({
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [filterCategory, setFilterCategory] = useState<string | null>(null)
+  const [visibleCategory, setVisibleCategory] = useState<string | null>(null)
 
   // Top-level items only
   const topLevel = allItems.filter((i) => i.parentItemId === null)
@@ -159,6 +160,31 @@ export function OutfitBuilder({
     setFilterCategory((prev) => (prev === category ? null : category))
   }
 
+  useEffect(() => {
+    if (filterCategory !== null) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort(
+            (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
+          )[0]
+        if (visible) {
+          const category = visible.target.getAttribute('data-category-section')
+          if (category) setVisibleCategory(category)
+        }
+      },
+      { rootMargin: '-20% 0px -60% 0px', threshold: 0 }
+    )
+
+    document
+      .querySelectorAll('[data-category-section]')
+      .forEach((el) => observer.observe(el))
+
+    return () => observer.disconnect()
+  }, [filterCategory])
+
   return (
     <div className="space-y-6">
       {/* Name & Description */}
@@ -235,7 +261,7 @@ export function OutfitBuilder({
         <CategoryRail
           categories={categoryEntries}
           filterCategory={filterCategory}
-          visibleCategory={null}
+          visibleCategory={visibleCategory}
           onJumpTo={handleJumpTo}
           onToggleFilter={handleToggleFilter}
         />
